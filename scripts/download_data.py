@@ -21,7 +21,8 @@ def main():
                 raise ValueError(f'{name}: checksum mismatch. A Drive HTML page is not a CSV. '
                                  'Use the official folder link in data/sources.json and verify the file.')
             path.write_bytes(content)
-        assert hashlib.sha256(path.read_bytes()).hexdigest() == info['sha256'], name
+        if hashlib.sha256(path.read_bytes()).hexdigest() != info['sha256']:
+            raise ValueError(f'{name}: checksum mismatch')
         print(f'Verified {name}')
 
 
