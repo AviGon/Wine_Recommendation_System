@@ -1,0 +1,16 @@
+protocol,model,macro_user_rmse
+chronological,global,0.5271741122679435
+chronological,user_mean,0.49985161312110865
+chronological,item_mean,0.40600497575761874
+chronological,ids,0.3770565696249535
+chronological,selected_metadata,0.3550658962035383
+random,global,0.5466742505377241
+random,user_mean,0.5068393633139348
+random,item_mean,0.4157867744228131
+random,ids,0.374556390675937
+random,selected_metadata,0.3712180668055835
+cold_item,global,0.5847645826888144
+cold_item,user_mean,0.5384516421383029
+cold_item,item_mean,0.5847645826888144
+cold_item,ids,0.5725441663433036
+cold_item,selected_metadata,0.4867829700696512

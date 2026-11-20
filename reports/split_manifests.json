@@ -1,0 +1,44 @@
+{
+  "chronological": {
+    "train": {
+      "rows": 120000,
+      "sha256": "d979ae5893c984023939d07373113f87e30f7db0cfff3b871fbd0b1080b554d1"
+    },
+    "validation": {
+      "rows": 15000,
+      "sha256": "db1be6fd958713ffb35547ca896146819073d111420aba6587cd18093cfbb18f"
+    },
+    "test": {
+      "rows": 15000,
+      "sha256": "53edc4afc54930c4988f7d5019d8fa9a96b8c4ecbdf0cd277eb68d635a9f18a3"
+    }
+  },
+  "random": {
+    "train": {
+      "rows": 120000,
+      "sha256": "51e53024c18fdde441e48d77d615b1e4ec6706ebe84da36c22b71a61770938ed"
+    },
+    "validation": {
+      "rows": 15000,
+      "sha256": "b9a02217a4117b98ed2712986071e464c1ac48ae6f5f33aa438e9f043060a70d"
+    },
+    "test": {
+      "rows": 15000,
+      "sha256": "2067a0f8f28a32e9f20705b0c9919741d15dc1995dc674c332535850411f9242"
+    }
+  },
+  "cold_item": {
+    "train": {
+      "rows": 126964,
+      "sha256": "fb5d1a5d047f55535e9a2cc980f1ac52bb9972a0c1853147f428df4352203181"
+    },
+    "validation": {
+      "rows": 8500,
+      "sha256": "07481db0c22889daf3e531e0e4eaf721d2dcccd577fa3d010df0afa9f275e3e1"
+    },
+    "test": {
+      "rows": 14536,
+      "sha256": "fc726c7aba3e47065c72882de5a5398c4bc6f22343067e1641fae1b1a9c80368"
+    }
+  }
+}

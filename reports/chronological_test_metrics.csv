@@ -1,0 +1,6 @@
+protocol,model,representation,rmse,mae
+chronological,global,global,0.6122999133645619,0.4931850133333333
+chronological,user_mean,user_mean,0.5878475313210619,0.46488221099050825
+chronological,item_mean,item_mean,0.4785167132012849,0.3681627265769063
+chronological,ids,ids,0.44925595582582417,0.34010714603864955
+chronological,selected_metadata,ids_metadata_time,0.43318001012879453,0.31772723469985575
