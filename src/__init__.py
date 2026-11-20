@@ -1,1 +1,1 @@
-"""Shared, reproducible Person A experiments."""
+"""Reproducible X-Wines analysis and evaluation utilities."""

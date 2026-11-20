@@ -14,7 +14,7 @@ def main():
     for name, info in sources['files'].items():
         path = destination/name
         if not path.exists():
-            request = urllib.request.Request(info['url'],headers={'User-Agent':'XWines-CSE258-research/1.0'})
+            request = urllib.request.Request(info['url'],headers={'User-Agent':'XWines-research/1.0'})
             with urllib.request.urlopen(request,timeout=90) as response:
                 content = response.read()
             if hashlib.sha256(content).hexdigest() != info['sha256']:

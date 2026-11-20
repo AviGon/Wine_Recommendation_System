@@ -2,7 +2,7 @@
 import unittest
 import numpy as np
 import pandas as pd
-from src.person_a import make_splits, FeatureProbe, parse_list
+from src.experiments import make_splits, FeatureProbe, parse_list
 
 
 class ProtocolTests(unittest.TestCase):

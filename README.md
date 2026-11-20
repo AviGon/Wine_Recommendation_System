@@ -1,8 +1,8 @@
-# Wine_Recommendation_System
+# Wine Recommendation System
 
-CSE 258R course project: X-Wines rating prediction. Person A's contribution covers **Task 1 (exploration)** and **Task 2 (predictive task, features and evaluation)**, with lightweight feature probes for the team handoff.
+Exploratory analysis and rating prediction with X-Wines. The experiments compare user/wine identities, wine attributes, and temporal features using chronological, random, and unseen-wine splits.
 
-Start with [the executed notebook](notebooks/person_a_tasks_1_2.ipynb), [short measured findings](reports/findings.md), [assignment/plan review](docs/plan_review.md), and [shared data contract](docs/data_contract.md).
+Start with the [analysis notebook](notebooks/xwines_analysis.ipynb), [findings](reports/findings.md), and [evaluation protocol](docs/evaluation_protocol.md).
 
 ## Reproduce
 
@@ -17,16 +17,14 @@ python scripts/execute_notebook.py
 python -m unittest discover -s tests -v
 ```
 
-You can also open `notebooks/person_a_tasks_1_2.ipynb` in Jupyter or VS Code and run all cells using the environment above. `scripts/build_notebook.py` regenerates the source notebook and clears outputs; run it only when changing its authored content, then execute again. Execution may take several minutes (69 main ridge fits, three time-diagnostic fits, EDA and clustered bootstraps).
+The notebook can also run in Jupyter or VS Code with this environment. `scripts/build_notebook.py` regenerates its source and clears saved outputs; execute the notebook afterward to regenerate results.
 
-The downloader uses the official **Slim 150,000-rating** files plus the **Test 1,000-rating** example edition. `data/sources.json` records exact URLs/hashes. If Drive serves an HTML page instead of data, download the named CSVs from the linked official folder into `data/raw/`; the same checksums must pass. Never silently substitute Test for Slim. Raw data, regenerated split CSVs, prediction rows and standalone figure PNGs are ignored; the notebook embeds results and figures, and tracked reports contain compact summaries and split hashes.
+## Data and experiments
 
-## Coverage and limits
+The downloader retrieves the official Slim edition (150,000 ratings) and Test example edition (1,000 ratings). URLs and SHA-256 checksums are recorded in `data/sources.json`. If Google Drive returns an HTML page, download the named CSVs from the linked official folder into `data/raw/`; the same checksum checks apply.
 
-The notebook maps all five assignment sections and the restaurant example to actual X-Wines fields. It includes activity/category/origin/time EDA, within-user type comparisons, taste-concentration permutations, chronological/random/cold-item splits, coverage, shared output files, validation feature/regularization experiments, RMSE/MAE, paired user-bootstrap intervals and error slices.
+Experiments include rating and activity distributions, origin/type/grape comparisons, within-user type differences, taste-concentration permutations, sparse ridge feature comparisons, RMSE/MAE, bootstrap confidence intervals, and error slices. Raw data, generated split CSVs, prediction rows, and standalone figure PNGs stay local. The notebook embeds results and figures; reports/ contains compact summaries and split hashes.
 
-No price or user-location fields exist. Catalogue metadata is a retrospective snapshot; the future-prediction split does not prove historical availability of attributes. A combined metadata/time improvement is not isolated proof of static metadata value. Full, KNN/MF/final hybrids, literature synthesis and Top-K remain team work; the notebook labels these boundaries.
-
-The assignment PDF states **early week 10**, without an exact deadline. Confirm Gradescope/course announcements. See the review for a relative integration schedule and the 20-minute presentation plan.
+Prices and consumer locations are unavailable. Catalogue metadata is retrospective, so chronological splitting does not establish historical attribute availability. Metadata and time features are compared separately to distinguish their predictive contributions.
 
 Dataset citation: de Azambuja, R. X., Morais, A. J., & Filipe, V. (2023). [X-Wines: A Wine Dataset for Recommender Systems and Machine Learning](https://doi.org/10.3390/bdcc7010020). *Big Data and Cognitive Computing*, 7(1), 20. [Official repository](https://github.com/rogerioxavier/X-Wines).

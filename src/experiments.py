@@ -1,6 +1,6 @@
-"""X-Wines Task 1/2: audited inputs, fixed splits, and controlled feature probes.
+"""X-Wines data validation, fixed splits, and feature experiments.
 
-These lightweight probes support feature selection; C/D own final KNN/MF/hybrids.
+Sparse ridge probes compare identity, content, and temporal features.
 All fitted encoders and parameters see training rows only. Validation selects alpha.
 """
 from __future__ import annotations
@@ -272,7 +272,7 @@ def run_protocol(wines, splits, protocol, out_dir, specs=None):
     """Tune on validation; test selected representation and prespecified references once.
 
     Do not refit on validation here: errors stay aligned to the exported train-only
-    histories. Future team models must use the same rule for comparable results.
+    histories. Model comparisons must use the same fitting policy.
     """
     out_dir = Path(out_dir); out_dir.mkdir(parents=True,exist_ok=True)
     joined = {p:f.merge(wines,on='WineID',validate='many_to_one') for p,f in splits.items()}

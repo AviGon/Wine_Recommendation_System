@@ -1,7 +1,7 @@
 {
   "upstream_commit": "5e43c7f38ff4abaee1815f84dbdd2b54aa873b1d",
   "official_folder": "https://drive.google.com/drive/folders/1vfkfa5deOSsNf3dN2R7xrWWgVXUqD1-k",
-  "retrieved_client_date": "2026-11-19",
+  "retrieved_date": "2026-11-19",
   "files": {
     "XWines_Test_100_wines.csv": {
       "url": "https://raw.githubusercontent.com/rogerioxavier/X-Wines/5e43c7f38ff4abaee1815f84dbdd2b54aa873b1d/Dataset/last/XWines_Test_100_wines.csv",
