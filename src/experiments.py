@@ -17,6 +17,8 @@ from sklearn.feature_extraction import DictVectorizer
 from sklearn.linear_model import Ridge
 
 SEED = 258
+PARTITIONS = ('train', 'validation', 'test')
+PROTOCOLS = ('chronological', 'random', 'cold_item')
 SAFE_META = ['Type', 'Elaborate', 'Country', 'RegionID', 'WineryID', 'Grapes', 'ABV']
 SPECS = {
     'ids': ['UserID', 'WineID'],
@@ -29,6 +31,7 @@ SPECS = {
     'ids_metadata_time': ['UserID', 'WineID'] + SAFE_META + ['Time', 'Age'],
     'user_taste': ['UserID', 'WineID'] + SAFE_META + ['UserType'],
 }
+ALLOWED_FIELDS = frozenset(['UserID', 'WineID', 'Time', 'Age', 'UserType'] + SAFE_META)
 
 
 def sha256(path):
@@ -47,15 +50,23 @@ def parse_list(value):
 
 def load_data(root, version='Slim'):
     root = Path(root)
+    if version not in {'Slim', 'Test'}:
+        raise ValueError('Supported editions: Slim, Test')
     suffix = ('1K', '150K') if version == 'Slim' else ('100', '1K')
     wines = pd.read_csv(root / f'XWines_{version}_{suffix[0]}_wines.csv')
     ratings = pd.read_csv(root / f'XWines_{version}_{suffix[1]}_ratings.csv',
                           dtype={'Vintage': 'string'}, low_memory=False)
     ratings['Date'] = pd.to_datetime(ratings.Date, errors='raise')
-    assert wines.WineID.is_unique and ratings.RatingID.is_unique
-    assert ratings[['UserID', 'WineID', 'Rating', 'Date']].notna().all().all()
-    assert ratings.WineID.isin(wines.WineID).all(), 'Orphan wine foreign key'
-    assert ratings.Rating.isin(np.arange(1, 5.01, .5)).all()
+    if wines.WineID.isna().any() or not wines.WineID.is_unique:
+        raise ValueError('WineID must be non-null and unique in the catalogue')
+    if ratings.RatingID.isna().any() or not ratings.RatingID.is_unique:
+        raise ValueError('RatingID must be non-null and unique')
+    if ratings[['UserID', 'WineID', 'Rating', 'Date']].isna().any().any():
+        raise ValueError('Missing rating identifiers, target, or timestamp')
+    if not ratings.WineID.isin(wines.WineID).all():
+        raise ValueError('Orphan wine foreign key')
+    if not ratings.Rating.isin(np.arange(1, 5.01, .5)).all():
+        raise ValueError('Ratings must be half-star values from 1 to 5')
     wines['GrapeList'] = wines.Grapes.map(parse_list)
     wines['HarmonizeList'] = wines.Harmonize.map(parse_list)
     return wines, ratings.sort_values('RatingID').reset_index(drop=True)
@@ -86,7 +97,7 @@ def audit(wines, ratings):
 
 
 def make_splits(ratings, protocol, seed=SEED):
-    """No labels used in partition assignment. Chronology never splits timestamp ties."""
+    """Partition without labels; chronology never splits timestamp ties."""
     rng = np.random.default_rng(seed)
     if protocol == 'chronological':
         ordered = ratings.sort_values(['Date','RatingID'])
@@ -112,20 +123,37 @@ def make_splits(ratings, protocol, seed=SEED):
     else:
         raise ValueError(protocol)
     splits = {p: ratings.loc[part == p].copy() for p in ['train','validation','test']}
-    validate_splits(splits, protocol)
+    validate_splits(splits, protocol, ratings)
     return splits
 
 
-def validate_splits(splits, protocol):
-    ids = [set(x.RatingID) for x in splits.values()]
-    assert all(len(x) for x in ids), 'Empty partition'
-    assert not (ids[0] & ids[1] or ids[0] & ids[2] or ids[1] & ids[2])
+def validate_splits(splits, protocol, source=None):
+    """Reject missing/duplicate events, temporal overlap, and grouped-split leakage."""
+    if protocol not in PROTOCOLS or set(splits) != set(PARTITIONS):
+        raise ValueError('Expected a known protocol and train/validation/test partitions')
+    for part in PARTITIONS:
+        frame = splits[part]
+        if frame.empty or frame[['RatingID', 'UserID', 'WineID', 'Date']].isna().any().any():
+            raise ValueError(f'{part}: empty partition or missing identifiers/timestamps')
+        if not frame.RatingID.is_unique:
+            raise ValueError(f'{part}: duplicate RatingID')
+    ids = [set(splits[p].RatingID) for p in PARTITIONS]
+    if ids[0] & ids[1] or ids[0] & ids[2] or ids[1] & ids[2]:
+        raise ValueError('RatingID overlaps across partitions')
+    if source is not None and (not source.RatingID.is_unique or set.union(*ids) != set(source.RatingID)):
+        raise ValueError('Partitions must cover every source RatingID exactly once')
     if protocol == 'chronological':
-        assert splits['train'].Date.max() < splits['validation'].Date.min()
-        assert splits['validation'].Date.max() < splits['test'].Date.min()
+        if not (splits['train'].Date.max() < splits['validation'].Date.min() and
+                splits['validation'].Date.max() < splits['test'].Date.min()):
+            raise ValueError('Chronological partitions overlap or split timestamp ties')
+    if protocol == 'random':
+        pairs = pd.concat([splits[p][['UserID', 'WineID']].assign(partition=p) for p in PARTITIONS])
+        if pairs.groupby(['UserID', 'WineID']).partition.nunique().gt(1).any():
+            raise ValueError('Repeated user-wine pairs cross partitions')
     if protocol == 'cold_item':
-        items = [set(x.WineID) for x in splits.values()]
-        assert not (items[0] & items[1] or items[0] & items[2] or items[1] & items[2])
+        items = [set(splits[p].WineID) for p in PARTITIONS]
+        if items[0] & items[1] or items[0] & items[2] or items[1] & items[2]:
+            raise ValueError('WineID overlaps across disjoint-wine partitions')
 
 
 def coverage_table(splits):
@@ -150,11 +178,20 @@ def group_summary(frame, group):
     return base.sort_values('ratings', ascending=False)
 
 
+def join_metadata(ratings, wines):
+    """Preserve rating rows and reject missing catalogue entries instead of dropping them."""
+    joined = ratings.merge(wines, on='WineID', how='left', validate='many_to_one', indicator=True)
+    if joined['_merge'].ne('both').any():
+        raise ValueError('Ratings reference wines absent from the catalogue')
+    return joined.drop(columns='_merge')
+
+
 def paired_type_effect(train_joined, seed=SEED, n_boot=2000):
     """Within-user Red minus White mean; each retained user has >=2 of each."""
     t = train_joined[train_joined.Type.isin(['Red','White'])]
     g = t.groupby(['UserID','Type']).Rating.agg(['mean','size'])
-    means, counts = g['mean'].unstack(), g['size'].unstack(fill_value=0)
+    means = g['mean'].unstack().reindex(columns=['Red', 'White'])
+    counts = g['size'].unstack(fill_value=0)
     eligible = counts.reindex(columns=['Red','White'], fill_value=0).ge(2).all(axis=1)
     deltas = (means.Red - means.White).loc[eligible].dropna().to_numpy()
     if len(deltas) < 2:
@@ -168,7 +205,9 @@ def paired_type_effect(train_joined, seed=SEED, n_boot=2000):
 class FeatureProbe:
     """Sparse ridge regression; unique training wines determine ABV scaling."""
     def __init__(self, fields, alpha):
-        self.fields, self.alpha = fields, alpha
+        if not fields or set(fields) - ALLOWED_FIELDS:
+            raise ValueError('Use declared prediction features; labels and undeclared fields are forbidden')
+        self.fields, self.alpha = list(fields), alpha
 
     def fit(self, frame):
         abv = pd.to_numeric(frame.drop_duplicates('WineID').ABV, errors='coerce')
@@ -232,7 +271,12 @@ def baseline_predictions(train, query, shrinkage=10):
 
 
 def metrics(y, prediction):
-    error = np.asarray(y) - np.asarray(prediction)
+    y, prediction = np.asarray(y, dtype=float), np.asarray(prediction, dtype=float)
+    if y.ndim != 1 or prediction.ndim != 1 or y.shape != prediction.shape or not len(y):
+        raise ValueError('Targets and predictions must be non-empty, equally sized 1-D arrays')
+    if not (np.isfinite(y).all() and np.isfinite(prediction).all()):
+        raise ValueError('Targets and predictions must be finite')
+    error = y - prediction
     return {'rmse': float(np.sqrt(np.mean(error**2))), 'mae': float(np.mean(abs(error)))}
 
 
@@ -274,11 +318,15 @@ def run_protocol(wines, splits, protocol, out_dir, specs=None):
     Do not refit on validation here: errors stay aligned to the exported train-only
     histories. Model comparisons must use the same fitting policy.
     """
+    validate_splits(splits, protocol)
+    specs = SPECS if specs is None else specs
+    candidates = [name for name, fields in specs.items() if set(fields) & set(SAFE_META)]
+    if set(specs.get('ids', [])) != {'UserID', 'WineID'} or not candidates:
+        raise ValueError('Provide the ID reference and at least one metadata representation')
     out_dir = Path(out_dir); out_dir.mkdir(parents=True,exist_ok=True)
-    joined = {p:f.merge(wines,on='WineID',validate='many_to_one') for p,f in splits.items()}
+    joined = {p: join_metadata(f, wines) for p, f in splits.items()}
     tr, va, te = (joined[p] for p in ['train','validation','test'])
     rows, fitted, chosen = [], {}, {}
-    specs = specs or SPECS
     for name, fields in specs.items():
         options = []
         for alpha in [1.,10.,100.]:
@@ -294,7 +342,6 @@ def run_protocol(wines, splits, protocol, out_dir, specs=None):
         print(f'{protocol}: {name} validation RMSE {min(x[0] for x in options):.4f}',flush=True)
     grid = pd.DataFrame(rows)
     # Content-bearing candidates only; identities are the reference.
-    candidates = [name for name in specs if name != 'ids']
     best = min(candidates,key=lambda name: min(grid.loc[grid.representation.eq(name),'rmse']))
     predictions = baseline_predictions(tr,te)
     predictions['ids'] = fitted['ids'].predict(te)
@@ -316,11 +363,13 @@ def run_protocol(wines, splits, protocol, out_dir, specs=None):
 
 
 def export_splits(splits, protocol, root):
+    validate_splits(splits, protocol)
     folder = Path(root)/protocol; folder.mkdir(parents=True,exist_ok=True)
     manifest = {}
     for part, frame in splits.items():
         path = folder/f'{part}.csv'
-        frame.to_csv(path,index=False,date_format='%Y-%m-%d %H:%M:%S')
+        frame.sort_values('RatingID').to_csv(
+            path, index=False, date_format='%Y-%m-%d %H:%M:%S', lineterminator='\n')
         manifest[part] = {'rows':len(frame),'sha256':sha256(path)}
     (folder/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     return manifest
@@ -333,8 +382,8 @@ def time_diagnostic(wines, splits):
     must not be represented as an independently pre-registered confirmation.
     It does not score or select anything on test.
     """
-    tr = splits['train'].merge(wines,on='WineID',validate='many_to_one')
-    va = splits['validation'].merge(wines,on='WineID',validate='many_to_one')
+    tr = join_metadata(splits['train'], wines)
+    va = join_metadata(splits['validation'], wines)
     rows = []
     for alpha in [1.,10.,100.]:
         model = FeatureProbe(['UserID','WineID','Time','Age'],alpha).fit(tr)

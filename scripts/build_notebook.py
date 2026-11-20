@@ -35,9 +35,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from IPython.display import display, Markdown
 from scipy.stats import spearmanr
-from src.experiments import (SEED, SPECS, load_data, audit, make_splits,
-    coverage_table, group_summary, paired_type_effect, export_splits,
+from src.experiments import (SEED, SPECS, load_data, audit, join_metadata,
+    coverage_table, group_summary, paired_type_effect,
     run_protocol, sha256, time_diagnostic)
+from src.pipeline import prepare_splits, feature_contrasts
 plt.rcParams.update({'figure.dpi':110, 'axes.spines.top':False,
                      'axes.spines.right':False, 'font.size':10})
 REPORTS = ROOT/'reports'; REPORTS.mkdir(exist_ok=True)
@@ -52,7 +53,8 @@ Run `python scripts/download_data.py` first. Inputs are pinned by SHA-256; GitHu
 The authors report Full: 100,646 wines, 1,056,079 users, 21,013,536 ratings. These are **published counts, not measurements from this run**. Verify the actual editions below. List fields are parsed with `ast.literal_eval`; IDs remain categorical. Repeated user/wine events can be valid different vintages in Full, so we do not blindly delete them.''')
 code('''sources = json.loads((ROOT/'data/sources.json').read_text())
 for name, info in sources['files'].items():
-    assert sha256(ROOT/'data/raw'/name) == info['sha256'], f'Changed input: {name}'
+    if sha256(ROOT/'data/raw'/name) != info['sha256']:
+        raise ValueError(f'Changed input: {name}')
 wines, ratings = load_data(ROOT/'data/raw', VERSION)
 example_wines, example_ratings = load_data(ROOT/'data/raw', 'Test')
 summary = pd.concat([audit(example_wines,example_ratings).rename('Test edition'),
@@ -77,15 +79,16 @@ Primary estimand: **a later rating event in the sampled catalogue**, given user 
 - **Stress test:** seeded disjoint wine groups; all interactions for a wine stay in one partition. This simulates unavailable item histories, not actual wine launch dates. Users may occur across partitions.
 
 Unknown user/item one-hot keys contribute zero (global/content fallback); mean baselines back off to the training global mean. Coverage is reported; no cold rows are silently dropped. Validation tunes models; the held-out test is used only for prespecified references plus the selected metadata representation. Models remain fitted on train for comparable history slices.''')
-code('''protocols = ['chronological','random','cold_item']
-splits = {p:make_splits(ratings,p) for p in protocols}
-manifests = {p:export_splits(splits[p],p,ROOT/'data/processed'/VERSION) for p in protocols}
-(REPORTS/'split_manifests.json').write_text(json.dumps(manifests,indent=2)+'\\n')
+code('''# Verify against the published hashes; never overwrite the reference manifest.
+if VERSION != 'Slim':
+    raise ValueError('Published evaluation partitions use the Slim edition')
+protocols = ['chronological','random','cold_item']
+splits = prepare_splits(ROOT)
 coverage = pd.concat([coverage_table(s).assign(protocol=p) for p,s in splits.items()],ignore_index=True)
 display(coverage)
 coverage.to_csv(REPORTS/'split_coverage.csv',index=False)
 train = splits['chronological']['train']
-train_joined = train.merge(wines,on='WineID',validate='many_to_one')
+train_joined = join_metadata(train, wines)
 print('Feature/hypothesis exploration below uses chronological TRAIN only.')''')
 md('''## Ratings, sparsity and activity
 
@@ -252,6 +255,15 @@ best_val = results['chronological']['grid'].sort_values('rmse').drop_duplicates(
 display(best_val[['representation','alpha','train_rmse','rmse']].sort_values('rmse'))
 print('IDs+time/age validation best:',round(time_check.rmse.min(),6))
 print('IDs+metadata+time/age validation best:',round(best_val.set_index('representation').loc['ids_metadata_time','rmse'],6))''')
+md('''### Static attributes and rating context
+
+The following contrasts use existing **validation** errors at the same regularization value. Negative differences favor the added features. `ids_time_only` is the historical report name for calendar features **plus rated-vintage age**, not calendar time alone. These contrasts do not isolate those two context components, establish causality, or evaluate another model on test.
+
+`selected_metadata` is also a historical output-column name: the selected representation can include rating context. Its combined test improvement cannot be attributed entirely to static attributes.''')
+code('''contrasts = feature_contrasts(results['chronological']['grid'], time_check)
+contrasts.to_csv(REPORTS/'chronological_feature_contrasts.csv',index=False)
+# Alpha 10 is the previously selected ID-reference setting, not a new choice.
+display(contrasts[contrasts.alpha.eq(10)].round(6))''')
 code('''primary = results['chronological']
 ci = primary['bootstrap']
 base = primary['scores'].set_index('model')
