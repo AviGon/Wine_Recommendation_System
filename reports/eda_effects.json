@@ -1,0 +1,10 @@
+{
+  "red_white": {
+    "eligible_users": 4630,
+    "mean_delta": 0.1601908974618578,
+    "ci_low": 0.14825955994328047,
+    "ci_high": 0.17267880824647877
+  },
+  "popularity_spearman": 0.11968743865463707,
+  "popularity_nominal_p": 0.00014838299600281995
+}

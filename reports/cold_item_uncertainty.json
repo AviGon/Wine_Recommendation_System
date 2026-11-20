@@ -1,0 +1,10 @@
+{
+  "delta_rmse": -0.10140351679221282,
+  "ci_low": -0.10599627300203497,
+  "ci_high": -0.0968144751134922,
+  "clusters": 7628,
+  "bootstrap_replicates": 2000,
+  "protocol": "cold_item",
+  "selected": "ids_metadata_time",
+  "alpha": 10.0
+}

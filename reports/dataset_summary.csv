@@ -1,0 +1,22 @@
+,Test edition,Slim edition
+ratings,1000,150000
+users,636,10561
+catalog_wines,100,1007
+rated_wines,100,1007
+countries,17,31
+regions,77,324
+wine_types,6,6
+date_min,2012-07-19 12:40:37,2012-04-19 20:46:00
+date_max,2021-12-31 12:17:41,2021-12-31 23:58:52
+sparsity,0.9842767295597484,0.9858955308296897
+repeated_user_wine_rows,0,0
+repeated_user_wine_vintage_rows,0,0
+exact_duplicate_rows,0,0
+future_vintage_rows,0,0
+non_numeric_vintage_rows,43,9643
+empty_grape_lists,0,0
+price_available,False,False
+user_location_available,False,False
+singleton_user_fraction,0.6132075471698113,0.023387936748413975
+mean_rating,3.772,3.82003
+fraction_rating_ge_4,0.55,0.5839533333333333

@@ -1,0 +1,27 @@
+{
+  "upstream_commit": "5e43c7f38ff4abaee1815f84dbdd2b54aa873b1d",
+  "official_folder": "https://drive.google.com/drive/folders/1vfkfa5deOSsNf3dN2R7xrWWgVXUqD1-k",
+  "retrieved_date": "2026-11-19",
+  "files": {
+    "XWines_Test_100_wines.csv": {
+      "url": "https://raw.githubusercontent.com/rogerioxavier/X-Wines/5e43c7f38ff4abaee1815f84dbdd2b54aa873b1d/Dataset/last/XWines_Test_100_wines.csv",
+      "sha256": "6a0bca68aa8252c18eb75e70cebcebc37cd751aef51088286e685a97d66a60eb",
+      "bytes": 38638
+    },
+    "XWines_Test_1K_ratings.csv": {
+      "url": "https://raw.githubusercontent.com/rogerioxavier/X-Wines/5e43c7f38ff4abaee1815f84dbdd2b54aa873b1d/Dataset/last/XWines_Test_1K_ratings.csv",
+      "sha256": "deb450653206e8f4c8cb294960cca567ad6d151f05436d1983ad663e9efa0a6f",
+      "bytes": 53364
+    },
+    "XWines_Slim_1K_wines.csv": {
+      "url": "https://drive.google.com/uc?export=download&id=1KJgeogB7vyagpEyv1ih4844TSRfZ0d9D",
+      "sha256": "b180f1691f69cdb6f567171b5d4d3666f6f63fb2eadfa667961c0523e6b6a9e5",
+      "bytes": 412612
+    },
+    "XWines_Slim_150K_ratings.csv": {
+      "url": "https://drive.google.com/uc?export=download&id=1mPD2IBBztT5lqHNgS8qgo_XMyZpuZjcx",
+      "sha256": "65db041753727013139b9ad9cc545154a508f7d8585c778bb4e75c670859ca48",
+      "bytes": 8007448
+    }
+  }
+}
