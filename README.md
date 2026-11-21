@@ -42,6 +42,17 @@ python scripts/evaluate_predictions.py outputs/validation_predictions.csv
 
 The scorer aligns IDs, rejects duplicates, missing/extra IDs and non-finite scores, clips to [1,5], and reports RMSE/MAE. Its default partition is validation. After choices are frozen, use `--partition test`; select another protocol with `--protocol random` or `--protocol cold_item`. Full input/output rules are in the [evaluation protocol](docs/evaluation_protocol.md).
 
+## Collaborative filtering (Person C)
+
+[`notebooks/C_collaborative_filtering.ipynb`](notebooks/C_collaborative_filtering.ipynb) compares a regularized bias model, item-item CF (Jaccard/cosine/Pearson), matrix factorization (our ALS and Surprise SVD) and SVD++ on the same chronological split, with tuning, learning curves, scaling, error slices and parameter interpretation. Code: [`src/cf.py`](src/cf.py); results: [`reports/C_findings.md`](reports/C_findings.md) and `reports/C_*.csv`. It needs `scikit-surprise` (pinned in `requirements.txt`). Rebuild and run with:
+
+```sh
+python scripts/build_c_notebook.py
+python scripts/execute_notebook.py notebooks/C_collaborative_filtering.ipynb
+```
+
+Prediction files (`RatingID,prediction`) for validation and test are written to `outputs/` (not tracked) for the team comparison.
+
 ## Data and experiments
 
 The downloader retrieves the official Slim edition (150,000 ratings) and Test example edition (1,000 ratings). URLs and SHA-256 checksums are recorded in `data/sources.json`. If Google Drive returns an HTML page, download the named CSVs from the linked official folder into `data/raw/`; the same checksum checks apply.

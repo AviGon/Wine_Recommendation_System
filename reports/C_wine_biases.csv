@@ -1,0 +1,563 @@
+,b_i,ratings,WineName,Type,Country,RegionName
+100120,-1.1795986531966236,51,Marcus James Cabernet Sauvignon,Red,Brazil,Serra Gaúcha
+193719,-1.0872719917047307,76,Retsina of Attica,White,Greece,Peloponnesos
+155623,-1.0492297465938403,103,Tempranillo,Red,Spain,Valdepeñas
+162948,-0.8991540386230337,90,Cabernet Sauvignon,Red,Chile,Central Valley (CL)
+168002,-0.8986315639957021,76,Malbec,Red,Argentina,Mendoza
+162894,-0.8859815654040898,76,Carmenérè,Red,Chile,Central Valley (CL)
+174466,-0.8837333838024708,60,Sauvignon Blanc,White,Australia,South Australia
+163383,-0.873944218248017,41,Carmenere,Red,Chile,Central Valley (CL)
+162505,-0.8480169635730077,391,Reservado Carmenère,Red,Chile,Santiago
+167450,-0.8351361044752061,379,Benjamin Malbec,Red,Argentina,Mendoza
+162748,-0.8286639122821458,136,Carmenère,Red,Chile,Central Valley (CL)
+137981,-0.7959736779845551,62,Lambrusco dell'Emilia Rosso,Sparkling,Italy,Emilia-Romagna
+174323,-0.7888082609633897,95,Mill Cellars Shiraz,Red,Australia,South Eastern Australia
+163162,-0.7569885597485052,73,Reserva Cabernet Sauvignon,Red,Chile,Colchagua Valley
+100086,-0.7562109822550164,123,Selecão Chardonnay-Viognier,White,Brazil,Campanha Gaúcha
+164257,-0.7507782959183139,37,Sauvignon Blanc,White,Chile,Central Valley (CL)
+162684,-0.7358353965114698,146,Carmenère,Red,Chile,Colchagua Valley
+163315,-0.7309606220393983,97,Sauvignon Blanc,White,Chile,Central Valley (CL)
+163544,-0.7280216000255088,81,Merlot,Red,Chile,Central Valley (CL)
+162738,-0.7241535922867879,133,Merlot (U),Red,Chile,Rapel Valley
+111765,-0.7051661782683115,199,Bordeaux Rouge,Red,France,Bordeaux
+162743,-0.6943003954805151,145,Cabernet Sauvignon,Red,Chile,Maule Valley
+100073,-0.6855331940614781,195,Moscatel,Sparkling,Brazil,Serra Gaúcha
+101701,-0.6832173021443325,219,Tinto,Red,Portugal,Alentejano
+137905,-0.6778948387589078,78,Chianti Colli Senesi,Red,Italy,Chianti Colli Senesi
+179508,-0.6747137998935783,130,White Zinfandel,Rosé,United States,California
+162611,-0.6607152158972057,172,Clasico Carmenère,Red,Chile,Maipo Valley
+100097,-0.6548045925127687,191,Terranova Espumante Moscatel,Sparkling,Brazil,Vale do São Francisco
+194299,-0.6409601404530622,33,Egri Bikavér Bulls Blood,Red,Hungary,Eger
+100012,-0.6408908847096623,133,Vinho Verde Branco,White,Portugal,Vinho Verde
+174274,-0.6389463190781323,195,Cabernet Sauvignon-Shiraz,Red,Australia,South Australia
+167592,-0.6366729916169274,216,Alma Mora Cabernet Sauvignon,Red,Argentina,San Juan
+162756,-0.6348631864470121,189,Hemisferio Reserva Carmenère,Red,Chile,Central Valley (CL)
+180233,-0.6318130645162783,73,California Champagne Brut,Sparkling,United States,California
+101586,-0.6273059935511666,452,The Original Rosé,Rosé,Portugal,Douro
+111503,-0.617436109511874,320,Blanc,White,France,Rhone Valley
+100052,-0.6174025184295738,184,Reserva Tannat,Red,Brazil,Serra Gaúcha
+112732,-0.6092180956486386,44,Bourgogne Pinot Noir,Red,France,Bourgogne
+163025,-0.6070392466697003,102,Cabernet Sauvignon,Red,Chile,Central Valley (CL)
+139770,-0.6068042469195163,34,Pinot Noir,Red,Italy,Delle Venezie
+171369,-0.6043528830515082,87,Danger Point Colombard-Chardonnay,White,South Africa,Western Cape
+167810,-0.6043474225396623,120,Reserva Malbec,Red,Argentina,Mendoza
+163465,-0.6007852804394317,52,Tradition Réserve Carmenère,Red,Chile,Cachapoal Valley
+193699,-0.5961351947320888,74,Classic Cabernet Sauvignon,Red,Israel,Galilee
+101713,-0.5898325089254687,184,Alentejo Tinto,Red,Portugal,Alentejo
+100008,-0.5883590033047172,74,Paradoxo Cabernet Sauvignon,Red,Brazil,Serra Gaúcha
+167464,-0.5863060258744038,506,Los Cardos Malbec,Red,Argentina,Mendoza
+171934,-0.5854814822131212,40,Pierre Jourdan Brut,Sparkling,South Africa,Franschhoek
+193765,-0.5838750608399051,47,Molodoe (Молодое),Red,Russia,Taman Peninsula (Таманский полуостров)
+136932,-0.5814905161745224,52,Chianti Riserva,Red,Italy,Chianti
+155647,-0.580514217623594,129,Rioja Rosado,Rosé,Spain,Rioja
+155565,-0.5782929734123464,222,Cava Brut,Sparkling,Spain,Cava
+138040,-0.5732640674444075,54,Chianti,Red,Italy,Chianti
+101570,-0.5724503095976265,604,Tinto,Red,Portugal,Douro
+163888,-0.5695735908006377,48,Hemisferio Reserva Sauvignon Blanc,White,Chile,Central Valley (CL)
+167114,-0.567928572071582,61,Tannat,Red,Uruguay,Canelones
+111398,-0.566981824006801,717,Rouge,Red,France,Rhone Valley
+171438,-0.5656098635364352,44,Unwooded Pinot Noir,Red,South Africa,Franschhoek
+171399,-0.5638172658240193,40,Sauvignon Blanc,White,South Africa,Robertson
+111679,-0.5562982978874382,153,Côtes De Gascogne Classic,White,France,Côtes de Gascogne
+100129,-0.5549583624673526,123,Faces Pinot Noir Rosé,Rosé,Brazil,Vale dos Vinhedos
+113011,-0.5534696327661524,30,Bourgogne Chardonnay,White,France,Bourgogne
+140147,-0.5473259683748325,48,Orvieto Classico,White,Italy,Orvieto
+111641,-0.5436700526653092,114,Pinot Noir,Red,France,Languedoc-Roussillon
+168970,-0.5418578882328118,57,Sauvignon Blanc,White,Argentina,Tupungato
+100556,-0.5334893587993041,35,Marie Gabi Rosado,Rosé,Brazil,Rio Grande do Sul
+100060,-0.5326011060332033,132,Reserva Tannat,Red,Brazil,Campanha Gaúcha
+111692,-0.5316213190451471,91,Beaujolais,Red,France,Beaujolais
+112251,-0.5303364194369578,92,Parfums de Vigne Bourgogne Chardonnay,White,France,Bourgogne
+162530,-0.5290399966446541,386,Cabernet Sauvignon,Red,Chile,Colchagua Valley
+111420,-0.5289658156821823,528,Beaujolais-Villages,Red,France,Beaujolais-Villages
+163039,-0.5288969895241162,93,Carmenère,Red,Chile,Central Valley (CL)
+100062,-0.5227527699981825,113,Origem Merlot,Red,Brazil,Vale dos Vinhedos
+162764,-0.5217332357177504,147,Carmenère,Red,Chile,Central Valley (CL)
+111829,-0.5208086051256295,56,Bordeaux,Red,France,Bordeaux
+136233,-0.5196389330056623,122,Toscana,Red,Italy,Toscana
+112149,-0.516033440402101,196,Bordeaux Sauvignon Blanc,White,France,Bordeaux
+138071,-0.515975282457515,104,Toscana Casamatta Bianco,White,Italy,Toscana
+167124,-0.5141113398901576,59,Puerto Carmelo Tannat,Red,Uruguay,Carmelo
+162824,-0.5110985920876082,180,Etnia Sauvignon Blanc,White,Chile,Central Valley (CL)
+193783,-0.5108570291984481,39,Reserve Cabernet,Red,Russia,Taman Peninsula (Таманский полуостров)
+136982,-0.5099801513231291,138,Prosecco,Sparkling,Italy,Prosecco
+168170,-0.5082374215523179,76,Malbec Rosé,Rosé,Argentina,Mendoza
+101783,-0.502461385267011,100,Colheita Seleccionada Tinto,Red,Portugal,Bairrada
+163659,-0.5010435270166864,42,Rosé,Rosé,Chile,Colchagua Valley
+100080,-0.5000457764669328,164,Agnus Cabernet Sauvignon,Red,Brazil,Vale dos Vinhedos
+100056,-0.49945962341396494,271,Brut Prosecco,Sparkling,Brazil,Serra Gaúcha
+100191,-0.4957506341987172,126,Reserva Chardonnay,White,Brazil,Serra Gaúcha
+194341,-0.4947948250175688,47,Cuvée De Printemps,Red,Lebanon,Bekaa Valley
+180028,-0.49414221809814907,71,Prosecco,Sparkling,Italy,Prosecco
+137015,-0.4917188415528934,36,Valpolicella Ripasso Superiore,Red,Italy,Valpolicella Ripasso
+100523,-0.49139774557327737,52,Espumante Brut Rosé,Sparkling,Brazil,Serra Gaúcha
+179397,-0.49111313853357386,87,White Zinfandel,Rosé,United States,California
+137763,-0.4866093666329266,57,Barbera,Red,Italy,Piemonte
+168186,-0.48552444841734343,88,Las Moras Chardonnay,White,Argentina,San Juan
+163332,-0.48460327488808524,131,Reserva de Pueblo,Red,Chile,Central Valley (CL)
+100125,-0.4698023904345057,217,Riche Demi-Sec,Sparkling,Brazil,Serra Gaúcha
+111755,-0.4660003858266577,109,Cahors Malbec,Red,France,Cahors
+162912,-0.46179411941209764,132,Sauvignon Blanc,White,Chile,Colchagua Valley
+155443,-0.4577028923545889,527,Cava Clasico Brut,Sparkling,Spain,Cava
+180405,-0.4576481302707102,52,Hot to Trot White Blend,White,United States,Washington
+174906,-0.4563822669669252,44,Reserve Shiraz,Red,Australia,South Eastern Australia
+163101,-0.45627613506172826,63,Las Mulas Reserva Sauvignon Blanc,White,Chile,Central Valley (CL)
+180360,-0.4529045938650962,68,Chardonnay,White,United States,California
+167634,-0.45127563270323057,242,Rosé of Malbec,Rosé,Argentina,Mendoza
+167463,-0.4502329561215977,508,Altos del Plata Malbec,Red,Argentina,Mendoza
+101595,-0.44853905026090796,366,Tinto (Touriga Nacional-Syrah-Aragonez),Red,Portugal,Alentejano
+179266,-0.4445470568131341,98,Pinot Noir,Red,United States,California
+167470,-0.4423019709461709,577,Malbec (Clásico),Red,Argentina,Mendoza
+162514,-0.44109363263245227,389,Adobe Carmenère (Reserva),Red,Chile,Colchagua Valley
+115267,-0.44063108188037153,72,Brut (Blanc de Blancs),Sparkling,France,Vin de France
+111454,-0.44027549169399127,274,Rosé,Rosé,France,Vin de France
+102950,-0.43878970383298216,35,Douro Peccatore,Red,Portugal,Douro
+163306,-0.4384655389370364,46,Tradition Réserve Cabernet Sauvignon,Red,Chile,Cachapoal Valley
+163490,-0.4312101595473756,58,La Joya Reserve Cabernet Sauvignon,Red,Chile,Colchagua Valley
+101566,-0.430509778727718,764,Monte Velho Tinto,Red,Portugal,Alentejano
+167154,-0.43039972461811354,57,Reserve Tannat,Red,Uruguay,Canelones
+100025,-0.42813627071825394,280,Espumante Método Charmat Brut,Sparkling,Brazil,Serra Gaúcha
+155807,-0.42616232794233694,92,Rioja Rosado,Rosé,Spain,Rioja
+167869,-0.425604240681724,142,Rosé de Malbec,Rosé,Argentina,Mendoza
+101874,-0.42548906665530917,67,Douro Tinto,Red,Portugal,Porto
+111951,-0.42476852961965716,47,Bordeaux,Red,France,Bordeaux
+179667,-0.42367333189340733,58,Sauvignon Blanc,White,United States,North Coast
+136646,-0.42088402430471983,58,Valpolicella Classico Superiore,Red,Italy,Valpolicella Classico
+164250,-0.4185254316859005,48,Guardian Reserva Chardonnay,White,Chile,Casablanca Valley
+135922,-0.4168527433253553,182,Rosso,Red,Italy,Toscana
+167425,-0.4162284339714354,758,Malbec,Red,Argentina,Mendoza
+112963,-0.415490941753959,82,Sauvignon Blanc Bordeaux,White,France,Bordeaux
+100022,-0.41381685133537977,117,Malbec Brut Rosé,Sparkling,Brazil,Serra Gaúcha
+102292,-0.4110867868533505,66,Rosé (Touriga Nacional-Syrah-Aragonez),Rosé,Portugal,Alentejano
+135962,-0.4086928822029103,424,Tupungato Passo Doble Malbec-Corvina,Red,Argentina,Tupungato
+111445,-0.40357071871181877,373,Bourgogne Couvent des Jacobins,Red,France,Bourgogne
+102280,-0.3994088351224669,71,Vinho Verde Rosé,Rosé,Portugal,Vinho Verde
+163365,-0.39799000075381386,131,Dias de Verano Reserva Muscat,White,Chile,Central Valley (CL)
+168284,-0.3974997512875338,152,Cuvée Réserve Brut,Sparkling,Argentina,San Rafael
+168898,-0.395044721211465,80,Brut Rosé,Sparkling,Argentina,Mendoza
+171003,-0.394231271943724,64,Shiraz-Merlot Special Reserve,Red,South Africa,Western Cape
+111524,-0.3936643690301091,182,Bordeaux Supérieur,Red,France,Bordeaux Supérieur
+167530,-0.38965206860332,435,Chardonnay,White,Argentina,Mendoza
+167440,-0.3891360988817839,318,Oak Cask Malbec,Red,Argentina,Mendoza
+112641,-0.3887149075273594,54,Crémant de Bourgogne Brut,Sparkling,France,Crémant de Bourgogne
+106803,-0.3880382938750299,44,Spätburgunder Trocken,Red,Germany,Rheingau
+100017,-0.3867494719277627,39,Colheita Tardia Malvasia-Moscato,Dessert,Brazil,Serra Gaúcha
+102341,-0.38490691969149704,79,Fine Ruby Port,Dessert/Port,Portugal,Porto
+137907,-0.38419571956722315,37,Valdobbiadene Prosecco Superiore Extra Dry,Sparkling,Italy,Conegliano-Valdobbiadene Prosecco
+193914,-0.3822085029324477,67,Sparkling Cuvée Brut,Sparkling,New Zealand,Marlborough
+194117,-0.3811747018774537,35,Kotsifali,Red,Greece,Crete
+180037,-0.3790973088342505,33,Red Blend,Red,United States,California
+174586,-0.37895664021885583,58,Sauvignon Blanc-Sémillon,White,Australia,Margaret River
+111715,-0.37745897208902246,147,Bourgogne Pinot Noir (Vieilles Vignes),Red,France,Bourgogne
+116213,-0.367905278707431,36,Grande Cuvée Brut Rosé,Sparkling,France,Vin de France
+163835,-0.3604702982624646,70,Estate Reserva Chardonnay,White,Chile,Maipo Valley
+101567,-0.3589554535900258,545,Tinto,Red,Portugal,Lisboa
+112201,-0.3530570786559552,42,Sauvignon de Seguin Bordeaux,White,France,Bordeaux
+193488,-0.3530466223622956,603,Pinot Noir,Red,New Zealand,Marlborough
+102547,-0.3444937376554082,52,Espumante de Vinho Verde Meio Seco,Sparkling,Portugal,Vinho Verde
+163343,-0.3444023760743858,120,Santa Digna Estelado Sparkling Rosé,Sparkling,Chile,Central Valley (CL)
+101644,-0.3440714922832556,281,Meio Queijo Douro Tinto,Red,Portugal,Douro
+180275,-0.3404125132164225,47,Heritage Reserve Chardonnay,White,United States,California
+179021,-0.3391949093389536,646,Cabernet Sauvignon,Red,United States,California
+195049,-0.33779156939904587,45,Gravel Pit Merlot-Malbec,Red,New Zealand,Hawke's Bay
+169463,-0.33663546660563765,33,Reserva Chardonnay,White,Argentina,Mendoza
+112010,-0.336309170782634,79,Bordeaux Supérieur,Red,France,Bordeaux Supérieur
+167419,-0.33472442882575093,1197,Malbec,Red,Argentina,Mendoza
+168827,-0.33338104376688477,49,Extra Brut Pinot Noir-Chardonnay,Sparkling,Argentina,Patagonia
+168279,-0.332266083767716,114,Extra Brut,Sparkling,Argentina,Mendoza
+193731,-0.33120962460787046,72,Paranga White,White,Greece,Macedonia
+101584,-0.32939323956959776,574,Flor de Crasto Tinto,Red,Portugal,Douro
+101635,-0.32793849148680954,219,Vinho Verde Loureiro-Alvarinho,White,Portugal,Minho
+101632,-0.3260967154488248,153,Vinho Verde Branco,White,Portugal,Vinho Verde
+157189,-0.3248441362382776,32,Crianza,Red,Spain,Rioja
+174901,-0.32277909679925004,44,Rocky Gully Riesling,White,Australia,Frankland River
+179050,-0.32054902226905146,296,Red,Red,United States,California
+156277,-0.32016434130090565,61,Rioja Tempranillo,Red,Spain,Rioja
+136180,-0.3192979799996809,227,Prosecco,Sparkling,Italy,Prosecco
+163839,-0.31428584530192033,45,Gran Reserva Pinot Noir,Red,Chile,Central Valley (CL)
+167614,-0.31299071787380306,202,Red Blend,Red,Argentina,Mendoza
+102304,-0.30844420701156194,84,Heritage Ruby Port,Dessert/Port,Portugal,Porto
+111872,-0.3064361400355624,119,Bourgogne Pinot Noir (La Vignée),Red,France,Bourgogne
+100010,-0.3055425326090655,234,Defesa Tinto,Red,Portugal,Alentejano
+193552,-0.3047254137231014,110,Burgenland Red,Red,Austria,Burgenland
+111538,-0.30221042528236464,331,Grand Terroir Tautavel Grenache-Syrah-Carignan,Red,France,Languedoc-Roussillon
+112830,-0.29930624149133517,31,Rosé,Rosé,France,Vin de France
+112483,-0.2985987048635611,49,Bordeaux,Red,France,Bordeaux
+100135,-0.29305142078718144,134,Cave Amadeu Rosé Brut,Sparkling,Brazil,Serra Gaúcha
+163388,-0.2919376155061235,84,Nimbus Estate Sauvignon Blanc,White,Chile,Casablanca Valley
+167431,-0.29080107122100624,775,Trumpeter Malbec,Red,Argentina,Mendoza
+138299,-0.2831823172769545,39,Rosato,Rosé,Italy,Piemonte
+163177,-0.2789083131320643,77,Wetland Reserva Carmenère,Red,Chile,Central Valley (CL)
+168128,-0.27884807816737656,154,Brut Rosé,Sparkling,Argentina,Mendoza
+174177,-0.2734840247623433,674,Koonunga Hill Shiraz-Cabernet,Red,Australia,South Australia
+112872,-0.273461809018473,68,Crémant de Bourgogne Brut,Sparkling,France,Crémant de Bourgogne
+113101,-0.27244019824169374,76,Viognier Secret de Famille,White,France,Rhone Valley
+167487,-0.2685974637045124,461,UNO Malbec,Red,Argentina,Mendoza
+113690,-0.26668907364512845,93,Crémant d'Alsace Cuvée Julien Brut,Sparkling,France,Crémant d'Alsace
+137062,-0.2659079244652829,57,Gavi,White,Italy,Gavi
+100061,-0.2641936567719198,211,Moscatel,Sparkling,Brazil,Serra Gaúcha
+100064,-0.2612556854349648,321,Réserve Brut,Sparkling,Brazil,Serra Gaúcha
+111455,-0.2587281003929399,387,Côtes-du-Rhône Blanc,White,France,Côtes-du-Rhône
+113211,-0.25768228210244204,72,Beaujolais Gamay,Red,France,Beaujolais
+179034,-0.25717409726362167,500,Old Vine Zinfandel,Red,United States,Lodi
+112790,-0.2565512962389386,44,Châteauneuf-du-Pape,Red,France,Châteauneuf-du-Pape
+163493,-0.2561683995267262,32,Carmenère Gran Reserva,Red,Chile,Elqui Valley
+113916,-0.2558042182422711,46,Crémant de Loire Brut,Sparkling,France,Crémant de Loire
+111907,-0.2517079559016662,59,Malbec,Red,Argentina,San Juan
+193580,-0.2505988914676789,158,Domaene Gobelsburg Grüner Veltliner,White,Austria,Kamptal
+111973,-0.24837305682048394,176,Bourgogne Cuvée Latour,Red,France,Bourgogne
+100305,-0.24668431506455432,159,Brut,Sparkling,Brazil,Vale dos Vinhedos
+167475,-0.24652091215644903,305,Don David Reserve Malbec,Red,Argentina,Cafayate Valley
+162417,-0.24216508222420394,68,Unplugged Rkatsiteli Orange,White,Ukraine,Crimeia (Крим)
+112039,-0.24026678597979342,101,Saint-Émilion Grand Cru,Red,France,Saint-Émilion Grand Cru
+100088,-0.24006155068585994,147,Aquarela Moscatel Espumante,Sparkling,Brazil,Serra Gaúcha
+193856,-0.23926137687932114,53,Красностоп Золотовский (Krasnostop Zolotovskiy),Red,Russia,Don Valley (Долина Дона)
+137103,-0.23793594548289018,109,Pinot Grigio,White,Italy,Friuli-Venezia Giulia
+106531,-0.23281642438335642,115,Riesling Trocken,White,Germany,Pfalz
+111740,-0.23110807274423617,320,Petit Chablis,White,France,Petit Chablis
+106540,-0.2296483412543336,87,Riesling,White,Germany,Mosel
+174568,-0.2269116207031368,71,Wallcliffe Sauvignon Blanc-Sémillon,White,Australia,Margaret River
+168694,-0.22405478636092588,49,Deseado,Sparkling,Argentina,Patagonia
+193203,-0.2196618199177575,34,Don Luis Viognier,White,Mexico,Valle de Guadalupe
+155618,-0.2177975701933132,249,Muga Rosado,Rosé,Spain,Rioja
+102055,-0.21045970347443685,104,Fine Ruby Port,Dessert/Port,Portugal,Porto
+162519,-0.20972990931381266,468,Reserva Cabernet Sauvignon (Classic),Red,Chile,Colchagua Valley
+100013,-0.20848014498926506,167,Ruby Port,Dessert/Port,Portugal,Porto
+113811,-0.2078425316952785,55,Crémant de Loire Brut,Sparkling,France,Crémant de Loire
+164220,-0.20598728806028227,43,Late Harvest Moscatel,Dessert,Chile,Limarí Valley
+135861,-0.20165335831561934,359,Pinot Grigio Valdadige,White,Italy,Valdadige
+100021,-0.2008340287201512,282,Merlot Reserva,Red,Brazil,Vale dos Vinhedos
+170984,-0.2000036621723117,308,Kadette Cape Blend,Red,South Africa,Stellenbosch
+111763,-0.19523236762830717,138,Bourgogne Chardonnay,White,France,Bourgogne
+106668,-0.1950341889475345,104,Haus Klosterberg Pinot Noir,Red,Germany,Mosel
+171317,-0.19270711955216369,35,Cabernet Franc Rosé,Rosé,South Africa,Stellenbosch
+106629,-0.19127777615714756,116,Spätburgunder,Red,Germany,Ahr
+100108,-0.18957851522512384,109,Colheita Tardia Malvasia Bianca,Dessert,Brazil,Serra Gaúcha
+139210,-0.18693453735431814,67,Al Poggio Chardonnay di Toscana,White,Italy,Toscana
+171675,-0.18646683314206136,48,Chenin Blanc,White,South Africa,Paarl
+106681,-0.18297741234039758,51,Pinot Noir Rosè,Rosé,Germany,Rheingau
+193530,-0.18154731333624322,112,Sauvignon Blanc,White,New Zealand,Marlborough
+180152,-0.18148080813928755,57,Rosé,Rosé,United States,Monterey County
+113154,-0.18087121432006012,40,Bourgogne Gamay,Red,France,Bourgogne
+106537,-0.177393014306709,165,Eins Zwei Dry Riesling,White,Germany,Rheingau
+179039,-0.17469497384923513,761,Riesling,White,United States,Columbia Valley
+155674,-0.1745769988959973,96,Rioja Reserva,Red,Spain,Rioja
+136522,-0.16811925560310328,76,Barbera d'Alba Superiore,Red,Italy,Barbera d'Alba
+112948,-0.16801379030712105,77,Francs-Côtes de Bordeaux,Red,France,Francs-Côtes de Bordeaux
+193489,-0.16760688970377305,253,Regional Collection Marlborough Sauvignon Blanc,White,New Zealand,Marlborough
+114265,-0.1628904633889063,52,Côtes de Provence Rosé,Rosé,France,Côtes de Provence
+100114,-0.16287807466348128,173,Primeira Estrada Syrah,Red,Brazil,Minas Gerais
+179060,-0.16239374678954258,346,Midnight Dark Red Blend,Red,United States,California
+100063,-0.16163093896324304,302,Quinta do Seival Estate Castas Portuguesas,Red,Brazil,Campanha Gaúcha
+101576,-0.15982173992367207,242,Red Blend,Red,Portugal,Vinho de Portugal
+111645,-0.15946682022414127,208,Haut-Médoc,Red,France,Haut-Médoc
+174330,-0.15451499812411648,64,Red Blend (Shiraz-Cabernet Sauvignon),Red,Australia,South Eastern Australia
+101970,-0.15449297343162646,52,Vinho Verde Bruto Muralhas,Sparkling,Portugal,Vinho Verde
+100014,-0.15279862836377353,226,Tawny Port,Dessert/Port,Portugal,Porto
+179053,-0.14928945129605803,501,Cabernet Sauvignon,Red,United States,Columbia Valley
+179063,-0.14928119978562088,274,Essential Red,Red,United States,California
+193494,-0.14827034983428458,221,Sauvignon Blanc,White,New Zealand,Marlborough
+163695,-0.14742565006590436,63,Cordillera Reserva Especial Chardonnay,White,Chile,Central Valley (CL)
+100049,-0.14607417850109428,203,Cuvée Giuseppe Merlot-Cabernet Sauvignon,Red,Brazil,Vale dos Vinhedos
+111466,-0.14394527562087753,275,Bourgogne Chardonnay,White,France,Bourgogne
+116149,-0.14164540189019473,44,Grande Réserve Brut Champagne,Sparkling,France,Champagne
+136668,-0.14054381599431326,123,Rosso di Valtellina,Red,Italy,Valtellina
+193910,-0.13772341436842037,60,Lightly Sparkling-Sauvignon Blanc,Sparkling,New Zealand,Marlborough
+136246,-0.1372154246980751,125,Pinot Grigio Alto Adige,White,Italy,Südtirol-Alto Adige
+155339,-0.1371080247459737,592,Gran Coronas Reserva Cabernet Sauvignon,Red,Spain,Penedès
+111471,-0.13671158396360522,515,Riesling Alsace,White,France,Alsace
+195459,-0.13162301838068757,34,Woodthorpe Vineyard Syrah,Red,New Zealand,Hawke's Bay
+111834,-0.1298144395839922,165,Chablis 'Champs Royaux',White,France,Chablis
+106752,-0.12283532124494867,71,Spätburgunder (Pinot Noir),Red,Germany,Rheingau
+180268,-0.1222529169306833,43,Old Vine Zinfandel,Red,United States,Lodi
+100019,-0.12020496169126273,52,Singular Nebbiolo,Red,Brazil,Vale dos Vinhedos
+155350,-0.11892288532794568,394,Crianza,Red,Spain,Rioja
+140422,-0.11809157334257238,50,Greco di Tufo,White,Italy,Greco di Tufo
+138765,-0.11774032150973607,39,Langhe Nebbiolo,Red,Italy,Langhe
+167439,-0.10939714154254897,556,High Altitude Vineyards Malbec,Red,Argentina,Mendoza
+172209,-0.10897931319291221,34,Bush Vine Pinotage,Red,South Africa,Swartland
+100018,-0.10685446908440467,50,Cave Cabernet Sauvignon,Red,Brazil,Serra Gaúcha
+167460,-0.102432258467609,585,Reserva Malbec,Red,Argentina,Mendoza
+179044,-0.1004348559943919,504,Vintner's Reserve Chardonnay,White,United States,California
+193482,-0.09981654907578051,577,Sauvignon Blanc,White,New Zealand,Marlborough
+112879,-0.09909980563813629,69,Chablis,White,France,Chablis
+112756,-0.09696482060810599,77,Chardonnay Bourgogne Les Ursulines,White,France,Bourgogne
+193484,-0.09455883315710878,631,Sauvignon Blanc,White,New Zealand,Marlborough
+180712,-0.09007883484748429,52,Dry Creek Valley Zinfandel,Dessert,United States,Dry Creek Valley
+114325,-0.08859779774308454,47,Côtes de Provence Rosé,Rosé,France,Côtes de Provence
+180300,-0.08606116126076956,41,Old Vine Zinfandel,Red,United States,Napa Valley
+106553,-0.08407699915389316,147,Riesling Trocken,White,Germany,Rheinhessen
+111624,-0.08271303887181326,281,Chablis,White,France,Chablis
+168273,-0.08261143148609283,90,A Rosé Is A Rosé Is A Rosé,Rosé,Argentina,Lujan de Cuyo
+163557,-0.08091929921760391,48,Origen Gran Reserva Carmenère,Red,Chile,Maipo Valley
+112862,-0.07903662362490159,81,Corbières,Red,France,Corbières
+135893,-0.07264408130423064,414,12 e Mezzo Primitivo del Salento,Red,Italy,Salento
+111657,-0.07180536396390555,243,Esprit Méditerranée Rosé,Rosé,France,Méditerranée
+140262,-0.07078271193985029,35,Müller Thurgau Alto Adige,White,Italy,Südtirol-Alto Adige
+112689,-0.07040939845482398,55,Pessac-Léognan,Red,France,Pessac-Léognan
+112353,-0.06490700387098174,71,Saint-Émilion Grand Cru,Red,France,Saint-Émilion Grand Cru
+137457,-0.058722020736643635,53,Serra Dei Turchi Barolo,Red,Italy,Barolo
+100001,-0.05783707088356096,395,Espumante Moscatel,Sparkling,Brazil,Serra Gaúcha
+100055,-0.0561349676352432,237,Millesimé Cabernet Sauvignon,Red,Brazil,Serra Gaúcha
+135867,-0.053721597948956666,608,Le Difese,Red,Italy,Toscana
+193855,-0.05225682146694441,47,Vicar's Choice Sauvignon Blanc Bubbles,Sparkling,New Zealand,Marlborough
+179027,-0.049360028759393645,647,Sonoma Coast Pinot Noir,Red,United States,Sonoma Coast
+111792,-0.0492247903028559,166,Sancerre Rouge Les Baronnes,Red,France,Sancerre
+106544,-0.04811494030239594,117,Pinot Noir Rosé,Rosé,Germany,Pfalz
+140831,-0.04134529061214887,42,Barbera d’Alba Pilade,Red,Italy,Barbera d'Alba
+112185,-0.03812513374512832,77,Rosé,Rosé,France,Vin de France
+167446,-0.035225481789030885,504,Golden Reserve Malbec,Red,Argentina,Lujan de Cuyo
+112255,-0.031181149903341566,101,Bourgogne Chardonnay,White,France,Bourgogne
+168457,-0.028078177173709085,94,Extra Brut Cuvée Spéciale Baron B,Sparkling,Argentina,Mendoza
+102392,-0.027910729698433973,45,Terras do Demo Touriga Nacional,Sparkling,Portugal,Beiras
+112089,-0.027748025295236216,141,Graves,Red,France,Graves
+116893,-0.026195981971180667,37,Grande Cuvée Blanc de Blancs Brut,Sparkling,France,Vin de France
+162841,-0.02455736045354837,170,Orzada Carignan,Red,Chile,Central Valley (CL)
+106541,-0.02151756162165845,199,Riesling Trocken,White,Germany,Nahe
+112777,-0.018917175626719667,76,Chablis Cellier de La Sablière,White,France,Chablis
+112596,-0.018700705274716144,47,Saint-Émilion Grand Cru,Red,France,Saint-Émilion Grand Cru
+106530,-0.017513975465153327,239,Nik Weis Selection Urban Riesling,White,Germany,Mosel
+101651,-0.017053685714996956,78,Signature Tinto,Red,Portugal,Alentejano
+155353,-0.01495565547470115,533,Pétalos,Red,Spain,Bierzo
+113116,-0.014590861505307513,109,Caroline Graves,White,France,Graves
+112861,-0.012835525652042084,63,Menetou-Salon Morogues Blanc,White,France,Upper Loire
+138625,-0.008676593019726984,35,Nicolon Barbera d'Alba,Red,Italy,Barbera d'Alba
+113142,-0.00774124394673712,39,Bourgogne Pinot Noir,Red,France,Bourgogne
+114973,-0.006984396791434513,46,Sancerre Les Baronnes Rosé,Rosé,France,Sancerre
+180750,-0.005345677788784178,45,Brut Vintage,Sparkling,United States,Willamette Valley
+174682,-0.0024290497897962796,33,Wilyabrup Valley Cabernet Sauvignon-Merlot,Red,Australia,Margaret River
+193835,0.0004109768410204703,91,Santorini Assyrtiko,White,Greece,Santorini
+174651,0.0011495442485613947,61,Hand Picked Shiraz-Viognier,Red,Australia,South Australia
+106669,0.0021221094493802883,66,Blauer Spätburgunder Trocken,Red,Germany,Pfalz
+112028,0.0070803112611102816,152,Brut Nature Silver Champagne Grand Cru 'Bouzy',Sparkling,France,Champagne Grand Cru 'Bouzy'
+106748,0.010906049012203435,49,J² Gau-Odernheimer Spätburgunder,Red,Germany,Rheinhessen
+111803,0.011483510557339371,209,Pouilly-Fuissé,White,France,Pouilly-Fuissé
+164279,0.012758390090178288,36,Montes Alpha Special Cuvée Sauvignon Blanc,White,Chile,Leyda Valley
+139340,0.012846347082364032,50,Moncalvina Moscato d'Asti 'Canelli',Sparkling,Italy,Moscato d'Asti
+179024,0.016535138916247166,299,Cabernet Sauvignon Aged in Bourbon Barrels,Red,United States,California
+179386,0.018472394196923772,143,Pinot Noir,Red,United States,Willamette Valley
+193483,0.020980197336946366,585,Private Bin Sauvignon Blanc,White,New Zealand,Marlborough
+167445,0.023093163472032028,839,Malbec,Red,Argentina,Mendoza
+113193,0.023228637818325758,64,Listrac-Médoc,Red,France,Listrac-Médoc
+193598,0.024601881405196774,123,Assyrtiko,White,Greece,Santorini
+113265,0.024948083328204147,36,Saint-Émilion Grand Cru,Red,France,Saint-Émilion Grand Cru
+106688,0.025321200653806126,83,Spätburgunder Tradition,Red,Germany,Pfalz
+162502,0.029707257749587768,796,Montes Alpha Cabernet Sauvignon,Red,Chile,Colchagua Valley
+111484,0.02977775793565506,539,Royal Brut Champagne,Sparkling,France,Champagne
+101617,0.031852307789130056,447,Cedro do Noval,Red,Portugal,Duriense
+193487,0.03290162981962913,362,Sauvignon Blanc,White,New Zealand,Marlborough
+112125,0.03733381532458199,122,Moulis-en-Médoc,Red,France,Moulis-en-Médoc
+179690,0.0404910973417227,154,Brut,Sparkling,United States,Anderson Valley
+111961,0.04086511299224524,128,Saint-Émilion Grand Cru,Red,France,Saint-Émilion Grand Cru
+112243,0.043631033653040295,96,Saint-Émilion Grand Cru,Red,France,Saint-Émilion Grand Cru
+106534,0.046932111885890575,243,Riesling Trocken,White,Germany,Rheingau
+155375,0.047666260557661266,456,Cava Gran Reserva Brut Nature Reserva de la Familia,Sparkling,Spain,Penedès
+101847,0.048106623009159855,191,Dona Antonia Porto Reserva Tawny,Dessert/Port,Portugal,Porto
+167418,0.056316120414534335,1282,Malbec,Red,Argentina,Mendoza
+112381,0.05648007431325133,135,Margaux,Red,France,Margaux
+156732,0.056642226238639175,52,Rioja Gran Reserva,Red,Spain,Rioja
+167079,0.05706172228333087,170,Reserva Cabernet Franc,Red,Uruguay,Maldonado
+171246,0.05721481735557177,61,Sauvignon Blanc Reserve Collection Elgin,White,South Africa,Elgin
+113421,0.05734639503748175,76,Chablis,White,France,Chablis
+180089,0.060605562693010415,74,Estate Grown Pinot Noir,Red,United States,Los Carneros
+112341,0.06062833534645817,63,L'Abeille de Fieuzal Pessac-Léognan,Red,France,Pessac-Léognan
+111648,0.06654996272009998,260,Sancerre Les Baronnes Blanc,White,France,Sancerre
+135885,0.06964920384602911,467,Barolo (Tradizione),Red,Italy,Barolo
+179084,0.06984291343757586,436,Pinot Noir Santa Barbara County,Red,United States,Santa Barbara County
+193485,0.07964323699595373,232,Sauvignon Blanc,White,New Zealand,Marlborough
+106536,0.07970368306188505,263,Gelblack Riesling Trocken,White,Germany,Rheingau
+180923,0.08160307628691169,59,Quartet Brut,Sparkling,United States,Anderson Valley
+107044,0.0816216244119346,42,J² Gau-Odernheimer Riesling,White,Germany,Rheinhessen
+113095,0.0816232498968995,60,Morgon,Red,France,Morgon
+112001,0.08234380842101302,142,Grande Réserve Sancerre Blanc,White,France,Sancerre
+115628,0.08260809774203763,48,Grande Reserve Brut Champagne Premier Cru,Sparkling,France,Champagne
+162525,0.08267568833192401,492,Carmenère,Red,Chile,Colchagua Valley
+162506,0.08630449920888518,692,Carmenère,Red,Chile,Central Valley (CL)
+111687,0.0875308528546911,199,Emilien,Red,France,Côtes de Bordeaux
+112247,0.09483300744734147,108,Fronsac,Red,France,Fronsac
+106635,0.09973811414089771,91,Malterdinger Spätburgunder,Red,Germany,Baden
+112716,0.0999812416057784,60,Les Menuts Saint-Émilion Grand Cru,Red,France,Saint-Émilion Grand Cru
+179545,0.10481925167629333,108,Rutherford Cabernet Sauvignon,Red,United States,Rutherford
+113284,0.10642628818097385,45,La Reserve d'Angludet,Red,France,Margaux
+106552,0.11008471223575392,130,Riesling Kabinett Blue Slate,White,Germany,Mosel
+111773,0.11200540093561802,194,Lacoste Borie Pauillac,Red,France,Pauillac
+179705,0.1148935034598207,106,Pinot Noir,Red,United States,Eola-Amity Hills
+112592,0.11492298006956828,53,Saint-Émilion Grand Cru,Red,France,Saint-Émilion Grand Cru
+172065,0.11577184847703481,45,Noble Late Harvest,Dessert,South Africa,Stellenbosch
+112454,0.11760900216228048,117,Pomerol,Red,France,Pomerol
+169311,0.12076562027803255,48,Cuvée Nature,Sparkling,Argentina,Uco Valley
+155334,0.12214365240264742,548,Camins del Priorat,Red,Spain,Priorat
+101678,0.12458647220915817,273,Touriga Nacional,Red,Portugal,Douro
+112237,0.12990053843234964,114,Saint-Émilion Grand Cru (Grand Cru Classé),Red,France,Saint-Émilion Grand Cru
+113288,0.1306314699045527,123,Brut Champagne,Sparkling,France,Champagne
+111967,0.13350102416448326,190,Saint-Émilion Grand Cru (Grand Cru Classé),Red,France,Saint-Émilion Grand Cru
+112616,0.13677616985148752,97,Les Cédres Châteauneuf-du-Pape,Red,France,Châteauneuf-du-Pape
+138538,0.13935735970972585,100,Piodilei Chardonnay,White,Italy,Langhe
+111932,0.14037843035674502,170,Margaux (Grand Cru Classé),Red,France,Margaux
+101592,0.14086952184846024,478,Meandro Douro Tinto,Red,Portugal,Douro
+112711,0.1416185058808367,116,Sancerre La Bourgeoise Blanc,White,France,Sancerre
+171266,0.14166186498210248,95,Frans Malan Cape Blend,Red,South Africa,Stellenbosch
+111729,0.14228229703069092,259,Saint-Estèphe,Red,France,Saint-Estèphe
+174544,0.14277633570836445,59,Abednego Shiraz-Grenache-Mourvedre,Red,Australia,Barossa Valley
+141176,0.1428768019408915,33,Etna Santo Spirito Bianco,White,Italy,Etna
+137060,0.14327588745856465,45,Susumaniello,Red,Italy,Salento
+135982,0.14340375464694094,343,Brunello di Montalcino,Red,Italy,Brunello di Montalcino
+113191,0.1493958343149407,106,Caillou Blanc,White,France,Bordeaux
+167433,0.15046728094021372,698,De Sangre Lujan de Cuyo Malbec,Red,Argentina,Lujan de Cuyo
+179040,0.15250344521652773,609,Knights Valley Cabernet Sauvignon,Red,United States,Knights Valley
+113600,0.1528228928251797,106,Blanc de Blancs Brut Champagne,Sparkling,France,Champagne
+112809,0.15356644323625596,62,Réserve Spéciale Pauillac,Red,France,Pauillac
+100092,0.15568537418583475,220,Nature,Sparkling,Brazil,Serra Gaúcha
+112229,0.1557230264568961,141,Saint-Émilion Grand Cru (Grand Cru Classé),Red,France,Saint-Émilion Grand Cru
+174509,0.15755443699844798,44,Cabernet Sauvignon,Red,Australia,Coonawarra
+101610,0.16644721783800662,460,Late Bottled Vintage Port,Dessert/Port,Portugal,Porto
+101660,0.1680891188971246,407,10 Year Old Tawny Port,Dessert/Port,Portugal,Porto
+179058,0.1682939259382134,373,Cabernet Sauvignon,Red,United States,Napa Valley
+100067,0.17129411852013654,269,Sur Lie Nature,Sparkling,Brazil,Serra Gaúcha
+193486,0.172649110278014,346,Sauvignon Blanc,White,New Zealand,Marlborough
+113050,0.17527787445294107,54,Mercurey Premier Cru 'Clos Tonnerre',Red,France,Mercurey
+137010,0.1800911012293073,71,Brunello di Montalcino,Red,Italy,Brunello di Montalcino
+193775,0.18147559327335647,47,Chateau Porto Carras,Red,Greece,Slopes of Meliton
+193499,0.1818431770150427,102,Sauvignon Blanc,White,New Zealand,Marlborough
+179958,0.18186178181233284,67,Estate Pinot Noir,Red,United States,Willamette Valley
+111421,0.18297033344725538,427,Châteauneuf-du-Pape,Red,France,Châteauneuf-du-Pape
+136054,0.1853537112260747,316,Perlé,Sparkling,Italy,Trento
+111587,0.1891027888590679,285,Haut-Médoc (Grand Cru Classé),Red,France,Haut-Médoc
+112526,0.19254332768160326,55,Saint-Émilion Grand Cru,Red,France,Saint-Émilion Grand Cru
+179080,0.1983117838190383,431,Napa Valley Cabernet Sauvignon,Red,United States,Napa Valley
+135859,0.20079622686950183,588,Barbaresco,Red,Italy,Barbaresco
+107023,0.2024210946545991,34,Ürziger Würzgarten Riesling Kabinett,White,Germany,Mosel
+170982,0.2025152355395641,701,The Chocolate Block,Red,South Africa,Franschhoek
+111590,0.20643668920197175,332,Pessac-Léognan,Red,France,Pessac-Léognan
+112987,0.20647769160411136,46,Gevrey-Chambertin,Red,France,Gevrey-Chambertin
+171001,0.20725411204367294,142,Life from Stone Sauvignon Blanc,White,South Africa,Robertson
+171256,0.2088350967680028,59,Proprietor's Blend,Red,South Africa,Stellenbosch
+113452,0.20884100104686168,55,Les Boucauds Sancerre Blanc,White,France,Sancerre
+101563,0.2088618304130825,759,Esporão Reserva Tinto,Red,Portugal,Alentejo
+111479,0.21068275257485275,644,Impérial Rosé Brut Champagne,Sparkling,France,Champagne
+112582,0.21115323159097266,140,Nocturne Champagne (Sec),Sparkling,France,Champagne
+194594,0.21400515761805966,43,Tokaji Aszú 3 Puttonyos,Dessert,Hungary,Tokaj
+167449,0.22089235372565783,500,Malbec,Red,Argentina,Mendoza
+113344,0.22236113399901142,134,Pure Extra Brut Champagne,Sparkling,France,Champagne
+142875,0.22600997904542086,36,Vin Santo del Chianti Classico S. Niccolò,Dessert,Italy,Vin Santo del Chianti Classico
+112171,0.2284952527570292,127,Sancerre Blanc,White,France,Sancerre
+111621,0.23563134078466022,205,Pouilly-Fumé,White,France,Pouilly-Fumé
+100046,0.2424212493295301,293,Vista de Serra Syrah,Red,Brazil,Serra Negra
+174689,0.24499336548918813,47,Applejack Vineyard Pinot Noir,Red,Australia,Yarra Valley
+194769,0.24843542182184347,54,Tokaji Aszú 3 Puttonyos,Dessert,Hungary,Tokaj
+171062,0.2587990891406733,126,21 Gables Chenin Blanc,White,South Africa,Stellenbosch
+102466,0.2678618726649945,51,Telhas Tinto,Red,Portugal,Alentejo
+113489,0.2756770453634664,104,Blanc de Blancs Brut Champagne Grand Cru 'Chouilly',Sparkling,France,Champagne
+174403,0.2768028654869908,128,Polish Hill Riesling,White,Australia,Clare Valley
+113695,0.2827296565264326,76,Sauternes (Grand Cru Classé),Dessert,France,Sauternes
+162507,0.28724926923677124,660,Coyam,Red,Chile,Colchagua Valley
+112695,0.2926143134066545,91,Saint-Émilion Grand Cru (Grand Cru Classé),Red,France,Saint-Émilion Grand Cru
+180260,0.29707020621874547,54,Cabernet Sauvignon,Red,United States,Napa Valley
+174800,0.299153065803883,34,Single Vineyard Shiraz,Red,Australia,Heathcote
+167443,0.30721924189694894,463,Cabernet Franc,Red,Argentina,Mendoza
+103070,0.3105042503439645,33,Calda Bordaleza Tinto,Red,Portugal,Bairrada
+113913,0.31338950157429063,96,Blanc de Blancs Extra Brut Champagne Grand Cru 'Le Mesnil-sur-Oger',Sparkling,France,Champagne Grand Cru 'Le Mesnil-sur-Oger'
+137893,0.3165006531058425,61,Graticciaia,Red,Italy,Puglia
+112094,0.31837299365772576,164,Margaux (Grand Cru Classé),Red,France,Margaux
+113730,0.3260621797163656,116,Pommard Premier Cru 'Grand Clos des Épenots',Red,France,Pommard
+139384,0.32676293401861634,57,Barolo Arborina,Red,Italy,Barolo
+111457,0.3322091366664383,479,Châteauneuf-du-Pape,Red,France,Châteauneuf-du-Pape
+114606,0.3328950882817252,66,Blanc de Blancs Millésime Prestige Brut Champagne Grand Cru,Sparkling,France,Champagne
+138829,0.33314451756876834,71,Vin Santo del Chianti Classico,Dessert,Italy,Vin Santo del Chianti Classico
+101677,0.33752635189465097,298,Reserva (Field Blend),Red,Portugal,Douro
+115365,0.34018097446398676,78,Les Folies de la Marquetterie Champagne,Sparkling,France,Champagne
+167458,0.34267444935325425,589,Cocodrilo Red Blend,Red,Argentina,Mendoza
+179069,0.3429097161407578,470,Napa Valley Merlot,Red,United States,Napa Valley
+180681,0.35930423763534414,79,L'Ermitage Brut,Sparkling,United States,Anderson Valley
+167429,0.360899398784256,704,Malbec,Red,Argentina,Mendoza
+112578,0.36443348599876196,136,Gevrey-Chambertin,Red,France,Gevrey-Chambertin
+167462,0.36518746399463553,541,Chardonnay,White,Argentina,Mendoza
+111461,0.37229337210859736,599,Brut (R de Ruinart) Champagne,Sparkling,France,Champagne
+170983,0.37248367686593964,349,Rubicon,Red,South Africa,Stellenbosch
+140962,0.3754581035918072,31,Riserva Prêt-A-Porter,Red,Italy,Amarone della Valpolicella
+141462,0.379438315367086,47,Toscana Gratius,Red,Italy,Toscana
+113332,0.39407729150192655,105,Royal Brut Champagne Grand Cru,Sparkling,France,Champagne
+111434,0.39906478083738045,549,Saint-Julien (Grand Cru Classé),Red,France,Saint-Julien
+168182,0.4040834301743967,100,Gran Malbec,Red,Argentina,Lujan de Cuyo
+113226,0.40487168279414787,89,Les Monts Damnés Sancerre,White,France,Sancerre
+135860,0.4164230051764162,698,Brunello di Montalcino,Red,Italy,Brunello di Montalcino
+142692,0.4225746956353434,31,Cerequio Barolo,Red,Italy,Barolo
+112727,0.43658222244295763,91,Vacqueyras,Red,France,Vacqueyras
+179059,0.4396126596023072,455,Cabernet Sauvignon,Red,United States,Napa Valley
+135871,0.44262671753359556,517,Barolo Marcenasco,Red,Italy,Barolo
+179047,0.4435574126317022,217,Cabernet Sauvignon,Red,United States,Paso Robles
+140010,0.44878378509877753,56,Rosso di Montalcino,Red,Italy,Rosso di Montalcino
+179054,0.44950099110914843,373,Cabernet Sauvignon,Red,United States,Alexander Valley
+136136,0.44984232829516435,195,Kurni Marche,Red,Italy,Marche
+111516,0.4644860845421675,393,Haut-Médoc (Grand Cru Classé),Red,France,Haut-Médoc
+193478,0.4690827965929609,827,Rouge (Gaston Hochar),Red,Lebanon,Bekaa Valley
+179016,0.47056093747000577,721,ARTEMIS Cabernet Sauvignon,Red,United States,Napa Valley
+111468,0.47058591082356777,557,Blanc de Blancs Brut Champagne,Sparkling,France,Champagne
+195407,0.47209580727273953,31,Earth Smoke Pinot Noir,Red,New Zealand,Canterbury
+111495,0.4872419582353131,416,Pauillac (Grand Cru Classé),Red,France,Pauillac
+111927,0.4917264491229581,227,Rare Vintage Brut Champagne,Sparkling,France,Champagne
+174545,0.49372814930950315,62,E & E Black Pepper Shiraz,Red,Australia,Barossa Valley
+112875,0.4975603578365644,71,Vieille Vigne Gevrey-Chambertin,Red,France,Gevrey-Chambertin
+111521,0.4985236656321086,483,Grand Vintage Brut Champagne,Sparkling,France,Champagne
+167767,0.5028156368566772,179,Finca Los Nobles Field Blend Malbec-Verdot,Red,Argentina,Lujan de Cuyo
+112923,0.5028362907449813,142,La Reine Des Bois Châteauneuf-du-Pape,Red,France,Châteauneuf-du-Pape
+102448,0.5029210638536439,77,20 Year Old Tawny Port,Dessert/Port,Portugal,Porto
+155368,0.5082225868402006,404,Cosecha,Red,Spain,Ribera del Duero
+138069,0.5151986819900215,58,Amarone della Valpolicella,Red,Italy,Amarone della Valpolicella
+162721,0.518063427272895,216,Espiritu de Apalta,Red,Chile,Colchagua Valley
+112511,0.5218489248463309,147,Pomerol,Red,France,Pomerol
+116995,0.5227216119563981,64,Cuvée des Grands Vintages Brut Champagne Grand Cru 'Ambonnay',Sparkling,France,Champagne Grand Cru 'Ambonnay'
+157620,0.5319882187982642,50,Christina Ribera del Duero,Red,Spain,Ribera del Duero
+137143,0.5331600006891608,60,Brunello di Montalcino,Red,Italy,Brunello di Montalcino
+180083,0.5394502489846893,97,Cabernet Sauvignon,Red,United States,Napa Valley
+111558,0.5468294528212503,380,Cuvée Réservée Châteauneuf-du-Pape Rouge,Red,France,Châteauneuf-du-Pape
+111448,0.5501815995457914,612,Brut Vintage Champagne (Extra Cuvée de Réserve),Sparkling,France,Champagne
+174248,0.557649807140471,225,Art Series Chardonnay,White,Australia,Margaret River
+111987,0.5585507523022627,129,Margaux du Château Margaux,Red,France,Margaux
+179634,0.5681218929930176,93,Cabernet Sauvignon,Red,United States,Oakville
+111845,0.5686901720394588,162,Côtes de Bourg,Red,France,Côtes de Bourg
+138409,0.5696121270334005,100,Arborina Barolo,Red,Italy,Piemonte
+181492,0.5853943014153803,35,L'Esprit Des Pavots,Red,United States,Knights Valley
+141799,0.5914860705543774,50,Barolo Vigneto Cannubi,Red,Italy,Barolo
+111478,0.5963192383198628,706,Sauternes (Premier Grand Cru Classé),Dessert,France,Sauternes
+155308,0.5969688073889597,877,Rioja Gran Reserva 904,Red,Spain,Rioja
+107183,0.5988215713617668,34,Brauneberger Juffer Riesling Auslese,Dessert,Germany,Brauneberg
+111458,0.6005297977937302,586,Saint-Estèphe (Grand Cru Classé),Red,France,Saint-Estèphe
+111433,0.6030582974355546,644,Saint-Julien (Grand Cru Classé),Red,France,Saint-Julien
+111667,0.6170746257036456,331,Saint-Émilion Grand Cru (Premier Grand Cru Classé),Red,France,Saint-Émilion Grand Cru
+111431,0.6255090049612464,680,Saint-Julien (Grand Cru Classé),Red,France,Saint-Julien
+113240,0.6349895372125899,104,Chambolle-Musigny,Red,France,Chambolle-Musigny
+155438,0.6361425660377685,464,Priorat,Red,Spain,Priorat
+111544,0.6468461474390846,399,Dom Ruinart Blanc de Blancs Brut Champagne,Sparkling,France,Champagne
+112950,0.6550697439092658,99,Meursault Clos de la Barre,White,France,Meursault
+138475,0.6551944953215867,91,Duemani Cabernet Franc,Red,Italy,Costa Toscana
+115984,0.6622191698816189,43,Comtesse Marie de France Brut Millésime Champagne Grand Cru 'Bouzy',Sparkling,France,Champagne Grand Cru 'Bouzy'
+174333,0.6624480063877826,164,The Factor,Red,Australia,Barossa Valley
+155628,0.6843001633038835,182,Don PX Gran Reserva,Dessert,Spain,Montilla-Moriles
+179012,0.6873801023573302,976,Cabernet Sauvignon,Red,United States,Napa Valley
+111475,0.6876847124866815,513,Saint-Émilion Grand Cru (Premier Grand Cru Classé),Red,France,Saint-Émilion Grand Cru
+136825,0.7040442198534507,124,Gaia & Rey Langhe,White,Italy,Langhe
+112834,0.7189953041603155,157,Dom Ruinart Rosé Brut Champagne,Sparkling,France,Champagne
+111713,0.7192171209977638,261,Corton-Charlemagne Grand Cru,White,France,Corton-Charlemagne Grand Cru
+140273,0.7235749379643254,72,Vigneto Bellavista Chianti Classico,Red,Italy,Toscana
+111429,0.7252618382696285,671,Saint-Estèphe (Grand Cru Classé),Red,France,Saint-Estèphe
+137224,0.7465991356729731,153,Brunello di Montalcino,Red,Italy,Brunello di Montalcino
+111417,0.7602734243761815,698,Pauillac (Grand Cru Classé),Red,France,Pauillac
+194674,0.7613754817779875,30,Aszú 6 Puttonyos,Dessert,Hungary,Tokaj
+101693,0.7876632253037954,261,Douro,Red,Portugal,Douro
+111422,0.7926132306897106,741,Pauillac (Grand Cru Classé),Red,France,Pauillac
+179805,0.8203708955711002,71,Estate Cabernet Sauvignon,Red,United States,Stags Leap District
+113321,0.824053345465807,137,V.O. Version Originale Blanc de Blancs Extra Brut Champagne Grand Cru,Sparkling,France,Champagne
+179131,0.8313504960571494,447,Dominus (Christian Moueix),Red,United States,Yountville
+162497,0.8397031618483334,921,Cabernet Sauvignon,Red,Chile,Puente Alto
+179043,0.8807070250138457,582,Special Selection Cabernet Sauvignon,Red,United States,Napa Valley
+140819,0.8999033518106012,49,Cannubi San Lorenzo-Ravera Barolo,Red,Italy,Barolo
+179061,0.9126792922937264,611,Insignia,Red,United States,Napa Valley
+181280,0.9148646217154225,33,Red Blend,Red,United States,Napa Valley
+179855,0.9150231498292508,122,Cabernet Sauvignon,Red,United States,Napa Valley
+112664,0.9387718415540501,111,Meursault Blanc,White,France,Meursault
+111395,0.9545492906764156,820,Pauillac (Premier Grand Cru Classé),Red,France,Pauillac
+180330,0.9609565369846639,74,IX Estate Red,Red,United States,Napa Valley
+111415,0.9860393610038999,564,Pauillac (Premier Grand Cru Classé),Red,France,Pauillac
+112084,1.0196039719179986,178,Oenothèque Brut Champagne,Sparkling,France,Champagne
+174184,1.0248863620265876,509,Grange,Red,Australia,South Australia

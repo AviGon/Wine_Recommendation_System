@@ -7,3 +7,4 @@ data/processed/
 .cache/
 reports/figures/
 reports/*_test_predictions.csv
+outputs/
