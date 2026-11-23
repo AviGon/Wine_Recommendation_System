@@ -1,0 +1,14 @@
+,value
+Slim ratings with Vintage N.V.,9643.0
+train ratings with Vintage N.V.,7381.0
+"train ratings with missing/invalid age (N.V., future, >100y)",7381.0
+"mean rating, N.V. train rows",3.6757891884568488
+"mean rating, vintage train rows",3.7914783473481384
+train wines that are blends (>1 grape),288.0
+train wines total,1000.0
+max grapes in one wine,9.0
+train wines with missing ABV,0.0
+regions in train,321.0
+regions with < 3 training wines,220.0
+grapes with < 3 training wines,106.0
+grapes in train,187.0

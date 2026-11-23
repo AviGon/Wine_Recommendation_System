@@ -42,6 +42,28 @@ python scripts/evaluate_predictions.py outputs/validation_predictions.csv
 
 The scorer aligns IDs, rejects duplicates, missing/extra IDs and non-finite scores, clips to [1,5], and reports RMSE/MAE. Its default partition is validation. After choices are frozen, use `--partition test`; select another protocol with `--protocol random` or `--protocol cold_item`. Full input/output rules are in the [evaluation protocol](docs/evaluation_protocol.md).
 
+## Collaborative filtering (Person C)
+
+[`notebooks/C_collaborative_filtering.ipynb`](notebooks/C_collaborative_filtering.ipynb) compares a regularized bias model, item-item CF (Jaccard/cosine/Pearson), matrix factorization (our ALS and Surprise SVD) and SVD++ on the same chronological split, with tuning, learning curves, scaling, error slices and parameter interpretation. Code: [`src/cf.py`](src/cf.py); results: [`reports/C_findings.md`](reports/C_findings.md) and `reports/C_*.csv`. It needs `scikit-surprise` (pinned in `requirements.txt`). Rebuild and run with:
+
+```sh
+python scripts/build_c_notebook.py
+python scripts/execute_notebook.py notebooks/C_collaborative_filtering.ipynb
+```
+
+Prediction files (`RatingID,prediction`) for validation and test are written to `outputs/` (not tracked) for the team comparison.
+
+## Factorization machines, content and hybrid models (Person D)
+
+[`notebooks/D_fm_hybrid.ipynb`](notebooks/D_fm_hybrid.ipynb) fits factorization machines on user/wine IDs, wine metadata (type, grapes, country, region, winery, ABV) and rating context (time, vintage age). It covers the hyperparameter grid and learning curves, the feature ablation, time vs vintage age, the extra features (Body, Acidity, Harmonize), the cold-start split, the final comparison with A's and C's models, error slices, feature weights, Top-10 ranking against C's MF, and diversity. Code: [`src/fm.py`](src/fm.py) (own L-BFGS FM plus a myFM Bayesian FM wrapper; fastFM does not build on Python 3.11 / NumPy 2); results: [`reports/D_findings.md`](reports/D_findings.md) and `reports/D_*.csv`. It imports C's `src/cf.py` for the bias and ALS references. Rebuild and run with:
+
+```sh
+python scripts/build_d_notebook.py
+python scripts/execute_notebook.py notebooks/D_fm_hybrid.ipynb
+```
+
+Prediction files: `outputs/D_fm_validation.csv`, `outputs/D_fm_test.csv`, `outputs/D_fm_cold_item_test.csv`.
+
 ## Data and experiments
 
 The downloader retrieves the official Slim edition (150,000 ratings) and Test example edition (1,000 ratings). URLs and SHA-256 checksums are recorded in `data/sources.json`. If Google Drive returns an HTML page, download the named CSVs from the linked official folder into `data/raw/`; the same checksum checks apply.
