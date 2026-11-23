@@ -53,6 +53,17 @@ python scripts/execute_notebook.py notebooks/C_collaborative_filtering.ipynb
 
 Prediction files (`RatingID,prediction`) for validation and test are written to `outputs/` (not tracked) for the team comparison.
 
+## Factorization machines, content and hybrid models (Person D)
+
+[`notebooks/D_fm_hybrid.ipynb`](notebooks/D_fm_hybrid.ipynb) fits factorization machines on user/wine IDs, wine metadata (type, grapes, country, region, winery, ABV) and rating context (time, vintage age). It covers the hyperparameter grid and learning curves, the feature ablation, time vs vintage age, the extra features (Body, Acidity, Harmonize), the cold-start split, the final comparison with A's and C's models, error slices, feature weights, Top-10 ranking against C's MF, and diversity. Code: [`src/fm.py`](src/fm.py) (own L-BFGS FM plus a myFM Bayesian FM wrapper; fastFM does not build on Python 3.11 / NumPy 2); results: [`reports/D_findings.md`](reports/D_findings.md) and `reports/D_*.csv`. It imports C's `src/cf.py` for the bias and ALS references. Rebuild and run with:
+
+```sh
+python scripts/build_d_notebook.py
+python scripts/execute_notebook.py notebooks/D_fm_hybrid.ipynb
+```
+
+Prediction files: `outputs/D_fm_validation.csv`, `outputs/D_fm_test.csv`, `outputs/D_fm_cold_item_test.csv`.
+
 ## Data and experiments
 
 The downloader retrieves the official Slim edition (150,000 ratings) and Test example edition (1,000 ratings). URLs and SHA-256 checksums are recorded in `data/sources.json`. If Google Drive returns an HTML page, download the named CSVs from the linked official folder into `data/raw/`; the same checksum checks apply.
