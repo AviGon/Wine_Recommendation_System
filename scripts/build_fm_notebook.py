@@ -1,7 +1,7 @@
-"""Build Person D's factorization-machine / content / hybrid notebook (Tasks 3 and 5).
+"""Build the factorization-machine, content and hybrid-model notebook.
 
-Regenerates notebooks/D_fm_hybrid.ipynb without outputs. Execute it with
-    python scripts/execute_notebook.py notebooks/D_fm_hybrid.ipynb
+Regenerates notebooks/factorization_machines.ipynb without outputs. Execute it with
+    python scripts/execute_notebook.py notebooks/factorization_machines.ipynb
 """
 from pathlib import Path
 
@@ -13,24 +13,24 @@ def md(s): cells.append(nbf.v4.new_markdown_cell(s.strip()))
 def code(s): cells.append(nbf.v4.new_code_cell(s.strip()))
 
 
-md('''# X-Wines: Factorization Machines, Content and Hybrid Models (Person D, Tasks 3 and 5)
+md('''# X-Wines: Factorization Machines, Content and Hybrid Models
 
 **Question:** what do wine attributes (type, grapes, country, region, ABV) and rating context (time, vintage age)
 add to user and wine identities, for wines that already have ratings and for new wines?
 
-| Part | What | Section in merged notebook |
-|---|---|---|
-| Main model | Factorization machine on IDs + metadata + context: our L-BFGS FM, plus a library Bayesian FM (myFM) | 3.3 |
-| Ablation | IDs → +type → +country → +grape → +region → all → +time; time vs vintage age separated | 3.3 |
-| Extra features | Body, Acidity, Harmonize (food pairings), clearly labelled | 3.3 |
-| Cold start | the repo's `cold_item` split (test wines never seen in training) | 3.3 |
-| Results | final table with A's and C's models, feature weights, error slices | 5.1, 5.3 |
-| Ranking | Top-10 precision/recall, MRR, AUC and diversity: FM vs C's MF | 5.4 |
+| Part | What |
+|---|---|
+| Main model | Factorization machine on IDs + metadata + context: our L-BFGS FM, plus a library Bayesian FM (myFM) |
+| Ablation | IDs → +type → +country → +grape → +region → all → +time; time vs vintage age separated |
+| Extra features | Body, Acidity, Harmonize (food pairings), clearly labelled |
+| Cold start | the repo's `cold_item` split (test wines never seen in training) |
+| Results | final table with the repository's ridge and collaborative-filtering models, feature weights, error slices |
+| Ranking | Top-10 precision/recall, MRR, AUC and diversity: FM vs matrix factorization |
 
-Protocol (shared with the team; see `docs/evaluation_protocol.md`): the verified **chronological** split of the
+Protocol (see `docs/evaluation_protocol.md`): the verified **chronological** split of the
 Slim edition; fit on train, tune on validation, score test once for each validation-selected model. RMSE is
 primary, MAE secondary, predictions clipped to [1, 5], seed 258. All model code is in `src/fm.py`; the
-written findings are in `reports/D_findings.md`.''')
+written findings are in `reports/fm_findings.md`.''')
 
 code('''from pathlib import Path
 import sys, os, time, json, subprocess, warnings
@@ -67,11 +67,11 @@ plt.rcParams.update({'figure.dpi': 110, 'axes.spines.top': False, 'axes.spines.r
 
 wines, parts = load_prepared_splits(ROOT, 'chronological')
 train, validation, test = parts['train'], parts['validation'], parts['test']
-# Team names: train, validation, test. fm_* are the same rows joined with wine metadata (the FM needs it).
+# Shared names: train, validation, test. fm_* are the same rows joined with wine metadata (the FM needs it).
 fm_train, fm_val, fm_test = (join_metadata(f, wines) for f in (train, validation, test))
 print({k: len(v) for k, v in parts.items()}, '| seed', SEED, '| parallel jobs', N_JOBS)''')
 
-md('''## 3.3.1 The factorization machine
+md('''## The factorization machine
 
 Each rating event is a sparse feature vector $x$: one-hot user and wine, one-hot type / elaborate / country /
 region / winery, fractional multi-hot grapes ($1/k$ for a blend of $k$ grapes), standardized ABV with a missing
@@ -82,10 +82,10 @@ $$\\hat r(x) = w_0 + \\sum_j w_j x_j + \\sum_{j<l} \\langle v_j, v_l \\rangle x_
 
 so besides an additive weight per feature it learns a $k$-dimensional factor $v_j$ per feature, and every pair of
 active features interacts, e.g. *user × grape*, *user × country*, *type × rating year*. With only user and wine
-active this is exactly matrix factorization $\\mu + b_u + b_i + p_u\\cdot q_i$ (C's model); with $k = 0$ it is ridge
+active this is exactly matrix factorization $\\mu + b_u + b_i + p_u\\cdot q_i$ (the model in `src/cf.py`); with $k = 0$ it is ridge
 regression on the same features (the repo's `FeatureProbe`).
 
-**Implementation.** The plan was fastFM, but it does not build on Python 3.11 / NumPy 2 (both the PyPI release
+**Implementation.** fastFM was the first choice, but it does not build on Python 3.11 / NumPy 2 (both the PyPI release
 and the GitHub source fail at the wheel-build step). We therefore use
 1. **our own FM** (`src/fm.py`, `FactorizationMachine`): the pairwise term computed in $O(k \\cdot \\text{nnz})$ as
    $\\tfrac12\\sum_f[(xV)_f^2 - (x^2V^2)_f]$, objective
@@ -122,8 +122,8 @@ fm_grid['model'] = 'fm (ours, L-BFGS)'
 bayes_grid = grid_search(fm_train, fm_val, [('fm', fm_fields, dict(n_factors=k, n_iter=300, n_kept=250))
                                             for k in [0, 4, 8]], n_jobs=3, evaluator=evaluate_bayes)
 print(f'Grid: {len(fm_grid) + len(bayes_grid)} fits in {time.perf_counter() - start:.0f}s')
-fm_grid.to_csv(REPORTS/'D_fm_grid.csv', index=False)
-bayes_grid.to_csv(REPORTS/'D_bayesian_fm_grid.csv', index=False)
+fm_grid.to_csv(REPORTS/'fm_grid.csv', index=False)
+bayes_grid.to_csv(REPORTS/'fm_bayesian_grid.csv', index=False)
 fm_best = best_params(fm_grid)
 fm_linear_best = best_params(fm_grid[fm_grid.n_factors == 0])
 fm_best_val = fm_grid.val_rmse.min()
@@ -153,7 +153,7 @@ ax.plot(s.reg_factors, s.val_rmse, marker='o', markersize=7, color=SERIES[1], la
 ax.set(xscale='log', xlabel='Factor regularization λ_V (log scale)', ylabel='RMSE (stars)',
        title=f"Train vs validation over λ_V (k = {fm_best['n_factors']})")
 ax.legend(frameon=False)
-fig.savefig(FIGURES/'D_fm_grid.png', bbox_inches='tight'); plt.show()''')
+fig.savefig(FIGURES/'fm_grid.png', bbox_inches='tight'); plt.show()''')
 
 md('''### Optimization and overfitting over iterations
 
@@ -169,7 +169,7 @@ for label, params in [('selected', fm_best), ('weak λ_V = 10, k = 16', dict(n_f
           f"final train {curve.train_rmse.iloc[-1]:.4f} / validation {curve.val_rmse.iloc[-1]:.4f}, "
           f"best validation {curve.val_rmse.min():.4f} at iteration {curve.val_rmse.idxmin() + 1}")
 fm_curves = pd.concat(fm_curves, ignore_index=True)
-fm_curves.to_csv(REPORTS/'D_fm_learning_curves.csv', index=False)
+fm_curves.to_csv(REPORTS/'fm_learning_curves.csv', index=False)
 fig, ax = plt.subplots(figsize=(7, 4), layout='constrained')
 for color, (label, c) in zip(SERIES, fm_curves.groupby('config', sort=False)):
     ax.plot(c.iteration, c.train_rmse, color=color, linestyle=':', label=f'{label}: train')
@@ -177,11 +177,11 @@ for color, (label, c) in zip(SERIES, fm_curves.groupby('config', sort=False)):
 ax.set(ylim=(0.25, 0.55), xlabel='L-BFGS iteration', ylabel='RMSE (stars)',
        title='Weak factor regularization memorizes training ratings')
 ax.legend(frameon=False, fontsize=8)
-fig.savefig(FIGURES/'D_fm_learning_curves.png', bbox_inches='tight'); plt.show()''')
+fig.savefig(FIGURES/'fm_learning_curves.png', bbox_inches='tight'); plt.show()''')
 
-md('''## 3.3.2 Feature ablation
+md('''## Feature ablation
 
-Agreed order: IDs → +type → +country → +grape → +region → all (adds elaborate, winery, ABV) → +time (rating
+Order: IDs → +type → +country → +grape → +region → all (adds elaborate, winery, ABV) → +time (rating
 time and vintage age). Every step is tuned on validation for both the linear model ($k = 0$, over
 $\\lambda_w$) and the FM (selected $k$ and $\\lambda_V$, over $\\lambda_w$), so each row shows the best each
 representation can do.''')
@@ -202,10 +202,10 @@ def summarize(grid, order):
 
 ablation_grid = grid_search(fm_train, fm_val, [c for name, f in ABLATION for c in tuned_configs(name, f)],
                             n_jobs=N_JOBS)
-ablation_grid.to_csv(REPORTS/'D_ablation_grid.csv', index=False)
+ablation_grid.to_csv(REPORTS/'fm_ablation_grid.csv', index=False)
 fm_ablation = summarize(ablation_grid, [n for n, _ in ABLATION])
 fm_ablation['step_change_fm'] = fm_ablation.fm.diff()
-fm_ablation.to_csv(REPORTS/'D_ablation.csv')
+fm_ablation.to_csv(REPORTS/'fm_ablation.csv')
 display(fm_ablation.round(4))''')
 
 code('''fig, ax = plt.subplots(figsize=(8, 4), layout='constrained')
@@ -216,7 +216,7 @@ ax.set_xticks(xs, fm_ablation.index)
 ax.set(xlabel='Feature set (cumulative)', ylabel='Validation RMSE (stars)',
        title='Static metadata barely moves warm-wine error; rating context does')
 ax.legend(frameon=False)
-fig.savefig(FIGURES/'D_ablation.png', bbox_inches='tight'); plt.show()''')
+fig.savefig(FIGURES/'fm_ablation.png', bbox_inches='tight'); plt.show()''')
 
 md('''### Time vs vintage age
 
@@ -229,10 +229,10 @@ code('''context_sets = [('ids', ID_FIELDS), ('ids+Time', ID_FIELDS + ['Time']), 
 context_grid = grid_search(fm_train, fm_val, [c for n, f in context_sets for c in tuned_configs(n, f)], n_jobs=N_JOBS)
 fm_context = summarize(context_grid, [n for n, _ in context_sets])
 fm_context['vs_same_without_context_fm'] = fm_context.fm - fm_context.fm.loc[['ids'] * 4 + ['all'] * 4].to_numpy()
-fm_context.to_csv(REPORTS/'D_time_vs_age.csv')
+fm_context.to_csv(REPORTS/'fm_time_vs_age.csv')
 display(fm_context.round(4))''')
 
-md('''## 3.3.3 Extra features the repo left out
+md('''## Extra features the repo left out
 
 Added one at a time to the main feature set, then all together. **Caveat:** in X-Wines, Body and Acidity are
 partly derived from user reviews (the repo's protocol excludes them for that reason), so any gain from them may
@@ -243,10 +243,10 @@ code('''extra_sets = [('main', fm_fields)] + [(f'+{e}', fm_fields + [e]) for e i
 extra_grid = grid_search(fm_train, fm_val, [c for n, f in extra_sets for c in tuned_configs(n, f)], n_jobs=N_JOBS)
 fm_extra = summarize(extra_grid, [n for n, _ in extra_sets])
 fm_extra['vs_main_fm'] = fm_extra.fm - fm_extra.fm.loc['main']
-fm_extra.to_csv(REPORTS/'D_extra_features.csv')
+fm_extra.to_csv(REPORTS/'fm_extra_features.csv')
 display(fm_extra.round(4))''')
 
-md('''## 3.3.4 Cold-start wines
+md('''## Cold-start wines
 
 The repo's `cold_item` split puts whole wines in train, validation or test, so **no test wine has a training
 rating** and the wine ID carries nothing. Everything has to come from the wine's attributes, their interactions
@@ -266,7 +266,7 @@ for name, fields in cold_sets:
     cold_configs += [(name, fields, dict(n_factors=k, reg_linear=rl, reg_factors=rv))
                      for k in [fm_best['n_factors']] for rl in [3., 10., 30.] for rv in [30., 100., 300.]]
 cold_grid = grid_search(cold_train, cold_val, cold_configs, n_jobs=N_JOBS)
-cold_grid.to_csv(REPORTS/'D_cold_item_grid.csv', index=False)
+cold_grid.to_csv(REPORTS/'fm_cold_item_grid.csv', index=False)
 cold_grid = cold_grid.assign(kind=np.where(cold_grid.n_factors == 0, 'linear', 'fm'))
 cold_summary = (cold_grid.loc[cold_grid.groupby(['name', 'kind']).val_rmse.idxmin()]
                 .pivot(index='name', columns='kind', values='val_rmse').reindex([n for n, _ in cold_sets]))
@@ -297,19 +297,19 @@ for name, pred in cold_pred.items():
             cold_test, cold_pred['ridge ids+metadata+time (repo)'], pred).items() if k in ('delta_rmse', 'ci_low', 'ci_high')})
     rows.append(row)
 fm_cold_results = pd.DataFrame(rows)
-fm_cold_results.to_csv(REPORTS/'D_cold_item_test.csv', index=False)
-prediction_frame(cold_test, cold_pred[fm_key]).to_csv(OUTPUTS/'D_fm_cold_item_test.csv', index=False)
+fm_cold_results.to_csv(REPORTS/'fm_cold_item_test.csv', index=False)
+prediction_frame(cold_test, cold_pred[fm_key]).to_csv(OUTPUTS/'fm_cold_item_test.csv', index=False)
 display(fm_cold_results.round(4))''')
 
-md('''## 5.1 Final test evaluation (chronological)
+md('''## Final test evaluation (chronological)
 
 Validation-selected models, fitted on the training partition only, scored once on the chronological test:
 - **FM** (selected above), and the **linear model on the same features** (k = 0, its own best $\\lambda_w$),
 - **FM on IDs only** (same $k$, $\\lambda$) to isolate what metadata + context add,
-- references recomputed on the same rows: the repo's baselines and ridge models, and C's bias model and ALS MF.
+- references recomputed on the same rows: the repo's baselines and ridge models, and the bias model and ALS MF from `src/cf.py`.
 
 Paired 95% user-cluster bootstrap intervals (2,000 resamples) against the repo's best ridge model and against
-C's bias model; negative ΔRMSE favours the FM.''')
+the bias model; negative ΔRMSE favours the FM.''')
 
 code('''ids_row = ablation_grid[(ablation_grid.name == 'ids') & (ablation_grid.n_factors == fm_best['n_factors'])]
 ids_params = dict(fm_best, reg_linear=float(ids_row.sort_values('val_rmse').iloc[0].reg_linear))
@@ -319,8 +319,8 @@ fm_models, fm_test_pred, fm_val_pred = {}, {}, {}
 for name, (fields, params) in fm_final.items():
     fm_models[name] = FMRecommender(fields, **params).fit(fm_train)
     fm_test_pred[name] = fm_models[name].predict(fm_test); fm_val_pred[name] = fm_models[name].predict(fm_val)
-prediction_frame(validation, fm_val_pred['fm']).to_csv(OUTPUTS/'D_fm_validation.csv', index=False)
-prediction_frame(test, fm_test_pred['fm']).to_csv(OUTPUTS/'D_fm_test.csv', index=False)
+prediction_frame(validation, fm_val_pred['fm']).to_csv(OUTPUTS/'fm_validation.csv', index=False)
+prediction_frame(test, fm_test_pred['fm']).to_csv(OUTPUTS/'fm_test.csv', index=False)
 
 reference = baseline_predictions(train, test)
 ref_fit = {}
@@ -329,73 +329,74 @@ for name, fields in [('ridge ids (repo)', ['UserID', 'WineID']),
     start = time.perf_counter(); probe = FeatureProbe(fields, 10.).fit(fm_train)
     ref_fit[name] = time.perf_counter() - start; reference[name] = probe.predict(fm_test)
 ridge_probe = probe
-start = time.perf_counter(); bias_model = BiasBaseline(5, 2).fit(train); ref_fit['bias (C)'] = time.perf_counter() - start
-reference['bias (C)'] = bias_model.predict(test)
+start = time.perf_counter(); bias_model = BiasBaseline(5, 2).fit(train); ref_fit['bias model'] = time.perf_counter() - start
+reference['bias model'] = bias_model.predict(test)
 start = time.perf_counter(); als_model = ALSMF(8, 11., reg_user_bias=5, reg_item_bias=2, n_iter=10).fit(train)
-ref_fit['als mf (C)'] = time.perf_counter() - start
-reference['als mf (C)'] = als_model.predict(test)
+ref_fit['als mf'] = time.perf_counter() - start
+reference['als mf'] = als_model.predict(test)
 
 settings = {'fm': f"k={fm_best['n_factors']}, λ_w={fm_best['reg_linear']:g}, λ_V={fm_best['reg_factors']:g}",
             'linear same features': f"k=0, λ_w={fm_linear_best['reg_linear']:g}",
             'fm ids only': f"k={ids_params['n_factors']}, λ_w={ids_params['reg_linear']:g}, λ_V={ids_params['reg_factors']:g}",
-            'bias (C)': 'reg_user=5, reg_item=2', 'als mf (C)': 'k=8, λ=11'}
+            'bias model': 'reg_user=5, reg_item=2', 'als mf': 'k=8, λ=11'}
 rows = []
 for name, pred in {**reference, **fm_test_pred}.items():
     row = dict(model=name, settings=settings.get(name, 'repo reference'), **metrics(test.Rating, pred),
                fit_seconds=fm_models[name].fit_seconds if name in fm_models else ref_fit.get(name))
     if name in fm_test_pred:
-        for ref in ['ridge ids+metadata+time (repo)', 'bias (C)']:
+        for ref in ['ridge ids+metadata+time (repo)', 'bias model']:
             b = cluster_bootstrap(test, reference[ref], pred)
             tag = 'ridge' if ref.startswith('ridge') else 'bias'
             row.update({f'vs_{tag}_delta': b['delta_rmse'], f'vs_{tag}_ci_low': b['ci_low'], f'vs_{tag}_ci_high': b['ci_high']})
     rows.append(row)
 fm_results = pd.DataFrame(rows)
-fm_results.to_csv(REPORTS/'D_test_metrics.csv', index=False)
+fm_results.to_csv(REPORTS/'fm_test_metrics.csv', index=False)
 display(fm_results.round(4))''')
 
-code('''# The team scorer must agree with these numbers (same check C runs).
-out = subprocess.run([sys.executable, 'scripts/evaluate_predictions.py', 'outputs/D_fm_test.csv', '--partition', 'test'],
+code('''# The shared scorer must agree with these numbers (the same check as the collaborative-filtering notebook).
+out = subprocess.run([sys.executable, 'scripts/evaluate_predictions.py', 'outputs/fm_test.csv', '--partition', 'test'],
                      cwd=ROOT, capture_output=True, text=True, check=True)
 check = json.loads(out.stdout)
 assert abs(check['rmse'] - fm_results.set_index('model').loc['fm', 'rmse']) < 1e-12
 print('Shared scorer agrees:', {k: round(v, 4) if isinstance(v, float) else v for k, v in check.items()})
-out = subprocess.run([sys.executable, 'scripts/evaluate_predictions.py', 'outputs/D_fm_cold_item_test.csv',
+out = subprocess.run([sys.executable, 'scripts/evaluate_predictions.py', 'outputs/fm_cold_item_test.csv',
                       '--partition', 'test', '--protocol', 'cold_item'], cwd=ROOT, capture_output=True, text=True, check=True)
 print('Cold-item FM, shared scorer:', json.loads(out.stdout))''')
 
-md('''### Combined comparison table (A + C + D)
+md('''### Combined comparison table
 
-C's validation-selected models come from `reports/C_test_metrics.csv` (same test rows, same scorer); the
-repo's ridge and baselines from A. Sorted by test RMSE.''')
+The validation-selected collaborative-filtering models come from `reports/cf_test_metrics.csv` (same test rows,
+same scorer); the repository's ridge models and baselines are recomputed here. Sorted by test RMSE.''')
 
-code('''combined = [fm_results.assign(owner=np.where(fm_results.model.isin(fm_test_pred), 'D',
-                                             np.where(fm_results.model.str.contains(r'\\(C\\)'), 'C (refit here)', 'A (repo)')))]
-c_path = REPORTS/'C_test_metrics.csv'
+code('''combined = [fm_results.assign(family=np.where(fm_results.model.isin(fm_test_pred), 'factorization machine',
+                                              np.where(fm_results.model.isin(['bias model', 'als mf']),
+                                                       'collaborative filtering (refit here)', 'repository baseline')))]
+c_path = REPORTS/'cf_test_metrics.csv'
 if c_path.exists():
     c = pd.read_csv(c_path)
     c = c[~c.model.isin(['global', 'user_mean', 'item_mean', 'ridge_ids (repo)', 'bias', 'als_mf'])]
-    combined.append(c[['model', 'settings', 'rmse', 'mae', 'fit_seconds']].assign(owner='C'))
-final_table = (pd.concat(combined, ignore_index=True)[['owner', 'model', 'settings', 'rmse', 'mae', 'fit_seconds']]
+    combined.append(c[['model', 'settings', 'rmse', 'mae', 'fit_seconds']].assign(family='collaborative filtering'))
+final_table = (pd.concat(combined, ignore_index=True)[['family', 'model', 'settings', 'rmse', 'mae', 'fit_seconds']]
                .sort_values('rmse').reset_index(drop=True))
-final_table.to_csv(REPORTS/'D_final_comparison.csv', index=False)
+final_table.to_csv(REPORTS/'fm_final_comparison.csv', index=False)
 display(final_table.round(4))''')
 
-md('''## 5.1b Who is easier to predict, and does metadata help warm wines?
+md('''## Who is easier to predict, and does metadata help warm wines?
 
 Error slices with the repo's `error_slices()` (training-count bins per user and per wine, warm / new-user /
-new-wine regimes), the same breakdown C uses. "fm ids only" vs "fm" isolates what metadata + context add.''')
+new-wine regimes), the same breakdown as the collaborative-filtering notebook. "fm ids only" vs "fm" isolates what metadata + context add.''')
 
 code('''slice_preds = {'fm': fm_test_pred['fm'], 'fm ids only': fm_test_pred['fm ids only'],
                'ridge ids+metadata+time (repo)': reference['ridge ids+metadata+time (repo)'],
-               'bias (C)': reference['bias (C)'], 'als mf (C)': reference['als mf (C)']}
+               'bias model': reference['bias model'], 'als mf': reference['als mf']}
 fm_slices = pd.concat([error_slices(train, test, p, name) for name, p in slice_preds.items()], ignore_index=True)
-fm_slices.to_csv(REPORTS/'D_error_slices.csv', index=False)
+fm_slices.to_csv(REPORTS/'fm_error_slices.csv', index=False)
 view = fm_slices.pivot_table(index=['slice', 'group'], columns='model', values='rmse', sort=False)
 view.insert(0, 'n', fm_slices.groupby(['slice', 'group'], sort=False).n.first())
 view['fm − ids only'] = view['fm'] - view['fm ids only']
 display(view.round(4))''')
 
-md('''## 5.3 Interpreting the weights
+md('''## Interpreting the weights
 
 Linear weights $w_j$ of the selected FM (stars relative to the other levels, after user and wine IDs) and of the
 repo's ridge model on IDs + metadata + time. Because the wine ID is in the model, a metadata weight only captures
@@ -417,7 +418,7 @@ fm_w['label'] = fm_w.feature.str.split('=', n=1).str[1]
 is_region = fm_w.field.eq('RegionID')
 fm_w.loc[is_region, 'label'] = fm_w.loc[is_region, 'label'].astype(float).map(region_names)
 meta_w = fm_w[fm_w.field.isin(['Type', 'Country', 'Grapes', 'RegionID', 'Elaborate', 'ABV', 'Time', 'Age'])].copy()
-meta_w.to_csv(REPORTS/'D_feature_weights.csv', index=False)
+meta_w.to_csv(REPORTS/'fm_feature_weights.csv', index=False)
 for field in ['Type', 'Country', 'Grapes']:
     t = meta_w[(meta_w.field == field) & (meta_w.train_wines >= 5)].sort_values('weight')
     print(f'\\n{field}: lowest and highest FM weights (ridge weight alongside)')
@@ -438,7 +439,7 @@ axes[1].barh(g.label, g.weight, color=[SERIES[1] if w < 0 else SERIES[0] for w i
 axes[1].axvline(0, color=MUTED, linewidth=1)
 axes[1].set(xlabel='FM linear weight (stars)', title='Country (≥ 5 training wines)')
 fig.suptitle('Metadata weights on top of user and wine IDs', color=INK)
-fig.savefig(FIGURES/'D_feature_weights.png', bbox_inches='tight'); plt.show()''')
+fig.savefig(FIGURES/'fm_feature_weights.png', bbox_inches='tight'); plt.show()''')
 
 md('''### How personal are the learned interactions?
 
@@ -452,7 +453,7 @@ for field in ['Type', 'Country', 'Grapes']:
     spread.append(s.head(8))
 spread = pd.concat(spread, ignore_index=True)
 spread['linear_weight'] = spread.feature.map(fm_w.set_index('feature').weight)
-spread.to_csv(REPORTS/'D_user_interaction_spread.csv', index=False)
+spread.to_csv(REPORTS/'fm_user_interaction_spread.csv', index=False)
 display(spread.round(4))
 # Interactions that do not involve the user: rating year x wine type (context x metadata).
 f = fm_models['fm'].factors()
@@ -463,7 +464,7 @@ display(year_type.sort_values().round(4).to_frame())
 norms = fm_w.groupby('field').factor_norm.mean().sort_values(ascending=False)
 print('Mean factor norm |v_j| by field:'); display(norms.round(4).to_frame())''')
 
-md('''## 5.4 Top-K ranking: FM vs C's matrix factorization
+md('''## Top-K ranking: FM vs matrix factorization
 
 Ranking protocol (fixed before looking at results, as the repo's protocol asks):
 - **Eligible users:** seen in training, with at least one *relevant* test wine (rating ≥ 4) that is not already
@@ -473,8 +474,8 @@ Ranking protocol (fixed before looking at results, as the repo's protocol asks):
 - **Metrics:** Precision@10, Recall@10, MRR (reciprocal rank of the first relevant wine) and AUC (relevant vs every
   other candidate), averaged over users.
 - **Models:** the FM on IDs + static metadata (time and vintage age are not defined for a wine the user has
-  never rated, so the context features are left out for ranking; same $k$, $\\lambda$ as selected), C's ALS MF
-  (k = 8, λ = 11), C's bias model, and training popularity.
+  never rated, so the context features are left out for ranking; same $k$, $\\lambda$ as selected), the ALS MF
+  (k = 8, λ = 11), the bias model, and training popularity.
 
 **Caveat:** a candidate the user did not rate is counted as not relevant, although the user may simply never have
 seen it; ratings are not exposures, and historical availability of the wines is unknown. Absolute values are
@@ -489,8 +490,8 @@ static_model = FMRecommender(ALL_STATIC, **fm_best).fit(fm_train)
 popularity = train.WineID.value_counts().reindex(wine_ids).fillna(0).to_numpy()
 score_sets = {
     'fm (IDs + static metadata)': fm_score_matrix(static_model, topk_users, wine_meta),
-    'als mf (C)': frame_score_matrix(als_model.raw, topk_users, wine_ids),
-    'bias (C)': frame_score_matrix(bias_model.raw, topk_users, wine_ids),
+    'als mf': frame_score_matrix(als_model.raw, topk_users, wine_ids),
+    'bias model': frame_score_matrix(bias_model.raw, topk_users, wine_ids),
     'popularity': np.tile(popularity, (len(topk_users), 1)),
 }
 # Check the fast FM scorer against ordinary row-by-row prediction on a sample of pairs.
@@ -503,7 +504,7 @@ for name, scores in score_sets.items():
     result, topk_lists[name] = topk_metrics(scores, topk_exclude, topk_relevant, k=10)
     topk_rows.append(dict(model=name, **result))
 fm_topk = pd.DataFrame(topk_rows)
-fm_topk.to_csv(REPORTS/'D_topk.csv', index=False)
+fm_topk.to_csv(REPORTS/'fm_topk.csv', index=False)
 display(fm_topk.round(4))''')
 
 md('''### Diversity of the top-10 lists
@@ -522,10 +523,10 @@ div_rows.append(dict(model='training ratings', red_share=float(train_meta.Type.e
                      top_country=train_meta.Country.value_counts().index[0],
                      top_country_share=float(train_meta.Country.value_counts(normalize=True).iloc[0])))
 fm_diversity = pd.DataFrame(div_rows)
-fm_diversity.to_csv(REPORTS/'D_diversity.csv', index=False)
+fm_diversity.to_csv(REPORTS/'fm_diversity.csv', index=False)
 display(fm_diversity.round(3))''')
 
-md('''## 3.5 Noise and missing data in D's features''')
+md('''## Noise and missing data in the content features''')
 
 code('''tw = fm_train.drop_duplicates('WineID')
 nv = train.Vintage.eq('N.V.')
@@ -547,20 +548,20 @@ issues = pd.Series({
     'grapes with < 3 training wines': int((grape_support < 3).sum()),
     'grapes in train': len(grape_support),
 })
-issues.to_frame('value').to_csv(REPORTS/'D_data_issues.csv')
+issues.to_frame('value').to_csv(REPORTS/'fm_data_issues.csv')
 display(issues.to_frame('value'))
 w = meta_w.dropna(subset=['train_wines'])
 print('Mean |FM weight| by training-wine support:')
 display(w.groupby(pd.cut(w.train_wines, [0, 2, 5, 20, 1000]), observed=True).weight
         .agg(n='size', mean_abs=lambda s: s.abs().mean()).round(4))''')
 
-md('''## Findings (Person D)
+md('''## Findings
 
-See `reports/D_findings.md` for the written conclusions with the numbers from this run.''')
+See `reports/fm_findings.md` for the written conclusions with the numbers from this run.''')
 
 nb = nbf.v4.new_notebook(cells=cells, metadata={
     'kernelspec': {'display_name': 'Python 3', 'language': 'python', 'name': 'python3'},
     'language_info': {'name': 'python'}})
-path = ROOT/'notebooks/D_fm_hybrid.ipynb'
+path = ROOT/'notebooks/factorization_machines.ipynb'
 nbf.write(nb, path)
 print(f'Wrote {path} ({len(cells)} cells)')

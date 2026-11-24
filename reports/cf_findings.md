@@ -1,9 +1,9 @@
-# Findings: collaborative filtering (Person C)
+# Findings: collaborative filtering
 
-Notebook: [`notebooks/C_collaborative_filtering.ipynb`](../notebooks/C_collaborative_filtering.ipynb). Code: [`src/cf.py`](../src/cf.py).
+Notebook: [`notebooks/collaborative_filtering.ipynb`](../notebooks/collaborative_filtering.ipynb). Code: [`src/cf.py`](../src/cf.py).
 Slim edition, chronological split (train 120,000 / validation 15,000 / test 15,000), seed 258. Every configuration was selected on validation; test was scored once per selected model.
 
-## Task 3: models
+## Models
 
 | Model | Selected on validation | Test RMSE | Test MAE | ΔRMSE vs bias, 95% CI |
 |---|---|---|---|---|
@@ -19,8 +19,8 @@ Slim edition, chronological split (train 120,000 / validation 15,000 / test 15,0
 
 Random-split sensitivity check (same settings, not re-tuned): bias 0.4706, item CF 0.4687 (−0.0019 [−0.0025, −0.0013]), ALS 0.4707, Surprise SVD 0.4760, SVD++ 0.4758.
 
-- **Evaluation.** RMSE (primary) and MAE on the chronological split; paired user-cluster bootstrap against the bias model. The predictions agree exactly with the team scorer (`scripts/evaluate_predictions.py`).
-- **Why these models.** The task is explicit-rating prediction, so the relevant class models are the bias model, similarity-based CF and latent-factor models (plus the implicit-feedback extension). Classifiers ignore that the stars are ordered, and BPR/one-class models are for clicks or purchases. See `Class_Models_vs_XWines.txt`.
+- **Evaluation.** RMSE (primary) and MAE on the chronological split; paired user-cluster bootstrap against the bias model. The predictions agree exactly with the shared scorer (`scripts/evaluate_predictions.py`).
+- **Why these models.** The target is an explicit star rating, so the relevant models are the bias model, similarity-based CF and latent-factor models (plus the implicit-feedback extension). Classifiers ignore that the stars are ordered, and BPR/one-class models are designed for clicks or purchases.
 - **Optimization.** Bias model: exact alternating updates. Item CF: closed form. Our MF: alternating least squares, where each half-step is an exact ridge solve, so there is no learning rate and training error falls monotonically. Surprise: SGD with a fixed learning rate of 0.005.
 - **Overfitting.** This is the central issue:
   - With weak regularization, MF memorizes training ratings. For example, k = 64 and λ = 5 drives training RMSE down to 0.29 while validation gets worse than the bias model.
@@ -39,7 +39,7 @@ Random-split sensitivity check (same settings, not re-tuned): bias 0.4706, item 
   - 6.6% of test rows come from users unseen in training; every model falls back to μ + b_i for them.
   - Ratings drift upward over time: the bias model under-predicts every validation/test month by 0.06–0.12 stars, and CF cannot fix that.
 
-## Task 5: results
+## Results
 
 - **What worked:** the regularized bias model. It beats the repo's ridge-on-IDs reference (0.4457 vs 0.4493) because users and wines get separate regularization. Item CF with damping gives a small but reliable further gain, on both splits.
 - **What did not work:** matrix factorization and SVD++. Once properly regularized, they are statistically indistinguishable from the bias model on the chronological test. With the chronological settings reused on the random split, Surprise SVD/SVD++ are worse (+0.005).
@@ -52,4 +52,4 @@ Random-split sensitivity check (same settings, not re-tuned): bias 0.4706, item 
   - **User bias b_u** has a standard deviation of 0.20 stars (90% of users within −0.34 to +0.28).
 - **Do the latent factors group wines?** No. A wine's 10 nearest neighbours in factor space share its type 38.0% of the time, against 37.5% for random neighbours, and its country 13.9% vs 11.7%. The PCA plot shows no type clusters.
 - **Why CF has nothing to learn here:** personal taste is not stable in this data. A user's personal Red-minus-White preference, after removing biases, measured on one random half of their ratings, has a correlation of only r = 0.03 with the same measure on the other half (1,536 users, 20 random splits). Users differ in *how generously* they rate, and wines differ in *how good* they are, but on Slim there is almost no repeatable "this user likes this kind of wine" signal for latent factors to capture.
-- **Implication for the project:** remaining error comes from rating noise and time drift, not missing personalization. The gains will come from time/context features and wine attributes for unseen wines (the repo's ridge model and Person D's FM), not from more complex collaborative filtering.
+- **Implication:** remaining error comes from rating noise and time drift, not missing personalization. The gains come from time/context features and wine attributes for unseen wines (the repo's ridge model and the factorization machine, see [`fm_findings.md`](fm_findings.md)), not from more complex collaborative filtering.

@@ -1,13 +1,13 @@
-# Findings: factorization machines, content and hybrid models (Person D)
+# Findings: factorization machines, content and hybrid models
 
-Notebook: [`notebooks/D_fm_hybrid.ipynb`](../notebooks/D_fm_hybrid.ipynb). Code: [`src/fm.py`](../src/fm.py). Tests: [`tests/test_fm.py`](../tests/test_fm.py).
-Slim edition, chronological split (train 120,000 / validation 15,000 / test 15,000), seed 258. Every configuration was selected on validation, and test was scored once per selected model. The team scorer (`scripts/evaluate_predictions.py --partition test`) reproduces the FM's test RMSE exactly.
+Notebook: [`notebooks/factorization_machines.ipynb`](../notebooks/factorization_machines.ipynb). Code: [`src/fm.py`](../src/fm.py). Tests: [`tests/test_fm.py`](../tests/test_fm.py).
+Slim edition, chronological split (train 120,000 / validation 15,000 / test 15,000), seed 258. Every configuration was selected on validation, and test was scored once per selected model. The shared scorer (`scripts/evaluate_predictions.py --partition test`) reproduces the FM's test RMSE exactly.
 
-## Task 3: models
+## Models
 
 ### Implementation (fastFM replaced)
 - **fastFM does not build** on Python 3.11 / NumPy 2: both the PyPI release and the GitHub source fail at the wheel-build step. So we use two other FMs:
-  1. **Our own FM** (`FactorizationMachine`), the main model. It is the second-order FM from the slides, with the pairwise term computed in O(k·nnz). It minimizes ½·SSE + ½λ_w‖w‖² + ½λ_V‖V‖² by **full-batch L-BFGS** with an analytic gradient, checked against finite differences in the tests. With k = 0 it reproduces the closed-form ridge solution (also tested), and on the repo's ridge features it matches the repo's `FeatureProbe` validation RMSE (0.4440 vs 0.44397 at λ = 10).
+  1. **Our own FM** (`FactorizationMachine`), the main model. It is the standard second-order FM, with the pairwise term computed in O(k·nnz). It minimizes ½·SSE + ½λ_w‖w‖² + ½λ_V‖V‖² by **full-batch L-BFGS** with an analytic gradient, checked against finite differences in the tests. With k = 0 it reproduces the closed-form ridge solution (also tested), and on the repo's ridge features it matches the repo's `FeatureProbe` validation RMSE (0.4440 vs 0.44397 at λ = 10).
   2. **A library FM, myFM** (`BayesianFM`, Gibbs-sampling Bayesian FM) with one hyperprior group per field. myFM 0.4.0 needs `setuptools<81` (it imports `pkg_resources`); both are pinned in `requirements.txt`.
 - **Features:** one-hot user, wine, type, elaborate, country, region and winery; fractional multi-hot grapes (1/k for a k-grape blend); ABV z-score + missing flag. Context features: month sin/cos, rating year, and rated-vintage age + missing flag. All of these are fitted on training rows only. An unseen user, wine or category gets no column, so it contributes zero; that is the FM's fallback.
 
@@ -50,7 +50,7 @@ Grid on the full feature set: k ∈ {0, 2, 4, 8, 16}, λ_w ∈ {2…10}, λ_V �
 | +Age | −0.0008 | −0.0008 |
 | +both | −0.0090 | −0.0091 |
 
-- **Calendar time is about 90% of the context gain.** It captures the upward rating drift that C also found. Vintage age adds a small, separate gain.
+- **Calendar time is about 90% of the context gain.** It captures the upward rating drift also seen in the collaborative-filtering analysis. Vintage age adds a small, separate gain.
 
 ### Extra features
 - Body, Acidity and Harmonize change the FM's validation RMSE by ≤ 0.0001, so they don't help on warm wines.
@@ -85,22 +85,22 @@ Test (14,536 rows, 101 wines, scored once):
   - Validation holds only 101 wines, so the FM's lower regularization (λ_w = 3, λ_V = 100) and its wine-side attribute interactions (type × country × grape × region) fit those particular wines.
   - The lesson: with few cold wines, choose the simpler, more regularized model, or tune with grouped cross-validation over wines. We report the failure rather than re-select on test.
 
-## Task 5: results
+## Results
 
 ### Final comparison (chronological test, same rows and scorer)
 
-| Owner | Model | Settings | Test RMSE | Test MAE | Fit (s) |
+| Family | Model | Settings | Test RMSE | Test MAE | Fit (s) |
 |---|---|---|---|---|---|
-| D | **Linear, IDs + metadata + time** | k = 0, λ_w = 5 | **0.4315** | **0.3165** | 2.5 |
-| D | **FM, IDs + metadata + time** | k = 8, λ_w = 5, λ_V = 300 | **0.4315** | 0.3174 | 19.5 |
-| A | Ridge IDs + metadata + time | α = 10 | 0.4332 | 0.3177 | 1.4 |
-| C | Item CF | cosine, k = 10, d = 1 | 0.4446 | 0.3342 | 0.8 |
-| C | Surprise SVD / SVD++ | k = 4 | 0.4457 | 0.3350 | 1.2 / 2.5 |
-| C | Bias model | λ_u = 5, λ_i = 2 | 0.4457 | 0.3356 | 0.02 |
-| C | ALS MF | k = 8, λ = 11 | 0.4460 | 0.3358 | 0.9 |
-| D | FM, IDs only | k = 8, λ_w = 5, λ_V = 300 | 0.4469 | 0.3370 | 1.4 |
-| A | Ridge IDs | α = 10 | 0.4493 | 0.3401 | 0.5 |
-| A | Item mean / user mean / global | | 0.4785 / 0.5878 / 0.6123 | | |
+| Factorization machine | **Linear, IDs + metadata + time** | k = 0, λ_w = 5 | **0.4315** | **0.3165** | 2.5 |
+| Factorization machine | **FM, IDs + metadata + time** | k = 8, λ_w = 5, λ_V = 300 | **0.4315** | 0.3174 | 19.5 |
+| Repository baseline | Ridge IDs + metadata + time | α = 10 | 0.4332 | 0.3177 | 1.4 |
+| Collaborative filtering | Item CF | cosine, k = 10, d = 1 | 0.4446 | 0.3342 | 0.8 |
+| Collaborative filtering | Surprise SVD / SVD++ | k = 4 | 0.4457 | 0.3350 | 1.2 / 2.5 |
+| Collaborative filtering | Bias model | λ_u = 5, λ_i = 2 | 0.4457 | 0.3356 | 0.02 |
+| Collaborative filtering | ALS MF | k = 8, λ = 11 | 0.4460 | 0.3358 | 0.9 |
+| Factorization machine | FM, IDs only | k = 8, λ_w = 5, λ_V = 300 | 0.4469 | 0.3370 | 1.4 |
+| Repository baseline | Ridge IDs | α = 10 | 0.4493 | 0.3401 | 0.5 |
+| Repository baseline | Item mean / user mean / global | | 0.4785 / 0.5878 / 0.6123 | | |
 
 - **FM vs ridge:** −0.0016 RMSE [−0.0030, −0.0002]. **FM vs bias model:** −0.0142 [−0.0163, −0.0120].
 - The best models are the ones that see rating **context**. The FM ties the linear model on the same features, so the gain over the repo ridge comes from better regularization (λ_w = 5), not from interactions.
@@ -110,7 +110,7 @@ Test (14,536 rows, 101 wines, scored once):
   - The extra features.
   - The Bayesian FM.
   - The FM on the cold-item test.
-  - On IDs alone, the FM (0.4469) is slightly worse than C's bias model (0.4457), which has separate user and wine regularization.
+  - On IDs alone, the FM (0.4469) is slightly worse than the bias model in `src/cf.py` (0.4457), which has separate user and wine regularization.
 
 ### Does metadata help warm wines, or only new ones?
 - **Mostly new wines.** On warm rows the gain over IDs comes almost entirely from context. For example, adding static metadata to IDs changes validation RMSE by only −0.0007, while time alone gives −0.008.
@@ -137,7 +137,7 @@ Test (14,536 rows, 101 wines, scored once):
 
 ### What the FM's interactions learned
 - **User × attribute interactions shrink to zero** at the selected λ_V (spread over users of ⟨v_u, v_type⟩ < 0.0001). The model found no repeatable personal taste for types, countries or grapes.
-- This matches C's split-half result (personal Red−White preference r = 0.03) and C's MF ≈ bias-model result.
+- This matches the collaborative-filtering results: the split-half test (personal Red−White preference r = 0.03) and matrix factorization performing no better than the bias model (see [`cf_findings.md`](cf_findings.md)).
 - The small interaction gain sits in **context × metadata** terms. Mean factor norm by field: Age 0.16, Time 0.16, ABV 0.06, Type 0.02, users 0.001.
 - Example: rating year × type adds −0.007 stars per 5 years for White and +0.011 for Rosé, on top of the +0.21 drift.
 
@@ -146,8 +146,8 @@ Test (14,536 rows, 101 wines, scored once):
 | Model | P@10 | R@10 | MRR | AUC |
 |---|---|---|---|---|
 | FM (IDs + static metadata) | 0.0079 | 0.035 | 0.027 | 0.714 |
-| ALS MF (C) | 0.0082 | 0.036 | 0.041 | 0.713 |
-| Bias model (C) | 0.0080 | 0.035 | 0.041 | 0.713 |
+| ALS MF | 0.0082 | 0.036 | 0.041 | 0.713 |
+| Bias model | 0.0080 | 0.035 | 0.041 | 0.713 |
 | **Popularity** | **0.0183** | **0.091** | **0.070** | **0.850** |
 
 - **Popularity wins clearly.** The rating models rank by predicted *rating*, which favours rarely-rated but highly rated wines. Relevance, though, requires the user to have *chosen* the wine, and that is driven by popularity (selection bias: users rate what they drink).
@@ -160,7 +160,7 @@ Test (14,536 rows, 101 wines, scored once):
 - Popularity is just as concentrated but in a different way: 98% red and Argentina-heavy, with 1.2 wine types per list vs 4.0 for FM.
 - **The personalized models are bias-dominated:** a wine's global quality decides the list, so they do not personalize either. Calibration or a diversity re-ranking would be needed before deployment.
 
-### Noise and missing data in D's features
+### Noise and missing data in the content features
 - **Non-vintage wines:** 9,643 Slim ratings (7,381 in train) have Vintage "N.V." They get the median training age plus an `age_missing` flag, so the FM learns their offset (−0.12 stars; N.V. train mean 3.68 vs 3.79 for vintage rows) instead of an impossible age. All 7,381 missing training ages are N.V. rows (no future or > 100-year vintages).
 - **Blends:** 288 of 1,000 training wines have more than one grape (up to 9). Fractional 1/k encoding keeps each wine's total grape weight at 1, so blends are not over-counted.
 - **Rare categories:** 220 of 321 regions and 106 of 187 grapes have fewer than 3 training wines. L2 regularization shrinks them: mean |weight| is 0.074 for categories with ≤ 2 wines vs 0.108 for > 20. Their coefficients are still noisy, so we only interpret categories with ≥ 5 wines.

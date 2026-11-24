@@ -1,4 +1,4 @@
-"""Checks for Person C's collaborative-filtering models; synthetic data only."""
+"""Checks for the collaborative-filtering models; synthetic data only."""
 import unittest
 
 import numpy as np

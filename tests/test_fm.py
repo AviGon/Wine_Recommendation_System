@@ -1,4 +1,4 @@
-"""Checks for Person D's factorization machine and ranking helpers; synthetic data only."""
+"""Checks for the factorization machine and ranking helpers; synthetic data only."""
 import unittest
 
 import numpy as np

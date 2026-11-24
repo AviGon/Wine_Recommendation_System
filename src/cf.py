@@ -1,13 +1,15 @@
-"""Person C: collaborative-filtering models for X-Wines rating prediction.
+"""Collaborative-filtering models for X-Wines rating prediction.
 
 Every model is fitted on a training frame only and predicts for any query frame
 with UserID and WineID columns. Query labels are never read. Predictions are
 clipped to [1, 5] (the shared scoring rule) and returned in query row order.
 
-Models (all from the course recommender-systems slides):
+Models:
 - BiasBaseline: mu + b_u + b_i, regularized, fitted by alternating updates.
 - ItemCF: item-to-item collaborative filtering with Jaccard, cosine or Pearson
   similarity, predicting deviations from the bias baseline.
+- ALSMF: latent-factor model mu + b_u + b_i + p_u . q_i fitted by alternating
+  least squares.
 - SurpriseMF: latent-factor model mu + b_u + b_i + p_u . q_i (Surprise SVD,
   stochastic gradient descent) and its implicit-feedback extension (SVD++).
 """

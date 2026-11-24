@@ -1,7 +1,7 @@
-"""Person D: factorization machine (FM) and content/hybrid helpers for X-Wines.
+"""Factorization machine (FM) and content/hybrid helpers for X-Wines.
 
 fastFM does not build on Python 3.11 / NumPy 2 (its wheel build fails), so this
-module implements the second-order FM from the course slides directly:
+module implements the standard second-order FM directly:
 
     y_hat(x) = w0 + sum_j w_j x_j + sum_{j<l} <v_j, v_l> x_j x_l
              = w0 + x.w + 0.5 * sum_f [ (x V)_f^2 - (x^2 V^2)_f ]
@@ -37,7 +37,7 @@ ALLOWED = frozenset(['UserID', 'WineID'] + SAFE_META + CONTEXT + EXTRA)
 ID_FIELDS = ['UserID', 'WineID']
 ALL_STATIC = ID_FIELDS + SAFE_META
 
-# Feature ablation in the order agreed in the work split.
+# Feature ablation order: identities, then one metadata field at a time, then rating context.
 ABLATION = [
     ('ids', ID_FIELDS),
     ('+type', ID_FIELDS + ['Type']),
