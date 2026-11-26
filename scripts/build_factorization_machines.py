@@ -23,20 +23,20 @@ add to user and wine identities, for wines that already have ratings and for new
 | Main model | Factorization machine on IDs + metadata + context: our L-BFGS FM, plus a library Bayesian FM (myFM) |
 | Ablation | IDs → +type → +country → +grape → +region → all → +time; time vs vintage age separated |
 | Extra features | Body, Acidity, Harmonize (food pairings), clearly labelled |
-| Cold start | the repo's `cold_item` split (test wines never seen in training) |
+| Cold start | the `cold_item` split (test wines never seen in training) |
 | Results | final table with the repository's ridge and collaborative-filtering models, feature weights, error slices |
 | Ranking | Top-10 precision/recall, MRR, AUC and diversity: FM vs matrix factorization |
 
 Protocol (see `docs/evaluation_protocol.md`): the verified **chronological** split of the
 Slim edition; fit on train, tune on validation, score test once for each validation-selected model. RMSE is
-primary, MAE secondary, predictions clipped to [1, 5], seed 258. All model code is in `src/fm.py`; the
+primary, MAE secondary, predictions clipped to [1, 5], seed 258. All model code is in `src/factorization_machines.py`; the
 written findings are in `reports/fm_findings.md`.''')
 
 code('''from pathlib import Path
 import sys, os, time, json, subprocess, warnings
 ROOT = Path.cwd()
-if not (ROOT/'src/fm.py').exists(): ROOT = ROOT.parent
-assert (ROOT/'src/fm.py').exists(), 'Run from repo root or notebooks/'
+if not (ROOT/'src/factorization_machines.py').exists(): ROOT = ROOT.parent
+assert (ROOT/'src/factorization_machines.py').exists(), 'Run from repo root or notebooks/'
 sys.path.insert(0, str(ROOT))
 os.environ.setdefault('MPLCONFIGDIR', str(ROOT/'.cache/matplotlib'))
 os.environ['TQDM_DISABLE'] = '1'                      # myFM progress bars
@@ -50,11 +50,11 @@ from IPython.display import display
 from src.pipeline import load_prepared_splits, score_predictions
 from src.experiments import (SEED, SAFE_META, metrics, baseline_predictions, cluster_bootstrap,
                              error_slices, join_metadata, FeatureProbe)
-from src.fm import (FMRecommender, BayesianFM, ABLATION, ALL_STATIC, CONTEXT, EXTRA, ID_FIELDS,
+from src.factorization_machines import (FMRecommender, BayesianFM, ABLATION, ALL_STATIC, CONTEXT, EXTRA, ID_FIELDS,
                     evaluate_fm, evaluate_bayes, grid_search, best_params, interaction_spread,
                     prediction_frame, fm_score_matrix, frame_score_matrix, topk_setup, topk_metrics,
                     diversity)
-from src.cf import BiasBaseline, ALSMF
+from src.collaborative_filtering import BiasBaseline, ALSMF
 
 REPORTS = ROOT/'reports'; FIGURES = REPORTS/'figures'; OUTPUTS = ROOT/'outputs'
 for folder in (FIGURES, OUTPUTS): folder.mkdir(parents=True, exist_ok=True)
@@ -82,16 +82,16 @@ $$\\hat r(x) = w_0 + \\sum_j w_j x_j + \\sum_{j<l} \\langle v_j, v_l \\rangle x_
 
 so besides an additive weight per feature it learns a $k$-dimensional factor $v_j$ per feature, and every pair of
 active features interacts, e.g. *user × grape*, *user × country*, *type × rating year*. With only user and wine
-active this is exactly matrix factorization $\\mu + b_u + b_i + p_u\\cdot q_i$ (the model in `src/cf.py`); with $k = 0$ it is ridge
-regression on the same features (the repo's `FeatureProbe`).
+active this is exactly matrix factorization $\\mu + b_u + b_i + p_u\\cdot q_i$ (the model in `src/collaborative_filtering.py`); with $k = 0$ it is ridge
+regression on the same features (the ridge `FeatureProbe`).
 
 **Implementation.** fastFM was the first choice, but it does not build on Python 3.11 / NumPy 2 (both the PyPI release
 and the GitHub source fail at the wheel-build step). We therefore use
-1. **our own FM** (`src/fm.py`, `FactorizationMachine`): the pairwise term computed in $O(k \\cdot \\text{nnz})$ as
+1. **our own FM** (`src/factorization_machines.py`, `FactorizationMachine`): the pairwise term computed in $O(k \\cdot \\text{nnz})$ as
    $\\tfrac12\\sum_f[(xV)_f^2 - (x^2V^2)_f]$, objective
    $\\tfrac12\\sum(\\hat r - r)^2 + \\tfrac12\\lambda_w\\lVert w\\rVert^2 + \\tfrac12\\lambda_V\\lVert V\\rVert^2$,
    minimized with **full-batch L-BFGS** (SciPy) using the analytic gradient (checked against finite differences in
-   `tests/test_fm.py`). Each loss/gradient evaluation is a few sparse matrix products, so no per-row Python loop
+   `tests/test_factorization_machines.py`). Each loss/gradient evaluation is a few sparse matrix products, so no per-row Python loop
    and no learning rate to tune; factors start from $N(0, 0.01^2)$, seed 258.
 2. **a library FM, myFM** (`BayesianFM`): a Bayesian FM fitted by Gibbs sampling, with one hyperprior group per
    field, so it *learns* a separate regularization strength for users, wines and each metadata field.
@@ -213,15 +213,15 @@ xs = np.arange(len(fm_ablation))
 ax.plot(xs, fm_ablation.linear, marker='o', markersize=7, color=SERIES[0], label='linear (k = 0)')
 ax.plot(xs, fm_ablation.fm, marker='o', markersize=7, color=SERIES[1], label=f"FM (k = {fm_best['n_factors']})")
 ax.set_xticks(xs, fm_ablation.index)
-ax.set(xlabel='Feature set (cumulative)', ylabel='Validation RMSE (stars)',
+ax.set(xlabel='Feature set', ylabel='Validation RMSE (stars)',
        title='Static metadata barely moves warm-wine error; rating context does')
 ax.legend(frameon=False)
 fig.savefig(FIGURES/'fm_ablation.png', bbox_inches='tight'); plt.show()''')
 
 md('''### Time vs vintage age
 
-The repo's `ids_time_only` probe combines calendar time **and** vintage age and left their individual
-contributions unresolved. Here they are separated, with and without static metadata.''')
+The ridge `ids_time_only` probe combines calendar time **and** vintage age. The comparisons below
+isolate each component, with and without static metadata.''')
 
 code('''context_sets = [('ids', ID_FIELDS), ('ids+Time', ID_FIELDS + ['Time']), ('ids+Age', ID_FIELDS + ['Age']),
                 ('ids+Time+Age', ID_FIELDS + CONTEXT), ('all', ALL_STATIC), ('all+Time', ALL_STATIC + ['Time']),
@@ -232,10 +232,10 @@ fm_context['vs_same_without_context_fm'] = fm_context.fm - fm_context.fm.loc[['i
 fm_context.to_csv(REPORTS/'fm_time_vs_age.csv')
 display(fm_context.round(4))''')
 
-md('''## Extra features the repo left out
+md('''## Additional wine attributes
 
 Added one at a time to the main feature set, then all together. **Caveat:** in X-Wines, Body and Acidity are
-partly derived from user reviews (the repo's protocol excludes them for that reason), so any gain from them may
+partly derived from user reviews (the evaluation protocol excludes them for that reason), so any gain from them may
 be partly leakage of review content into "metadata". Harmonize (recommended food pairings) is a catalogue field,
 encoded like grapes (fractional multi-hot).''')
 
@@ -248,7 +248,7 @@ display(fm_extra.round(4))''')
 
 md('''## Cold-start wines
 
-The repo's `cold_item` split puts whole wines in train, validation or test, so **no test wine has a training
+The `cold_item` split puts whole wines in train, validation or test, so **no test wine has a training
 rating** and the wine ID carries nothing. Everything has to come from the wine's attributes, their interactions
 with the user (*user × grape*, *user × country*...) and the user's own bias. We tune the same grid on the
 cold-item validation wines, compare content subsets (is country or grape more informative for a new wine?), then
@@ -306,9 +306,9 @@ md('''## Final test evaluation (chronological)
 Validation-selected models, fitted on the training partition only, scored once on the chronological test:
 - **FM** (selected above), and the **linear model on the same features** (k = 0, its own best $\\lambda_w$),
 - **FM on IDs only** (same $k$, $\\lambda$) to isolate what metadata + context add,
-- references recomputed on the same rows: the repo's baselines and ridge models, and the bias model and ALS MF from `src/cf.py`.
+- references recomputed on the same rows: the shared baselines and ridge models, and the bias model and ALS MF from `src/collaborative_filtering.py`.
 
-Paired 95% user-cluster bootstrap intervals (2,000 resamples) against the repo's best ridge model and against
+Paired 95% user-cluster bootstrap intervals (2,000 resamples) against the tuned ridge reference and against
 the bias model; negative ΔRMSE favours the FM.''')
 
 code('''ids_row = ablation_grid[(ablation_grid.name == 'ids') & (ablation_grid.n_factors == fm_best['n_factors'])]
@@ -383,7 +383,7 @@ display(final_table.round(4))''')
 
 md('''## Who is easier to predict, and does metadata help warm wines?
 
-Error slices with the repo's `error_slices()` (training-count bins per user and per wine, warm / new-user /
+Error slices with the shared `error_slices()` (training-count bins per user and per wine, warm / new-user /
 new-wine regimes), the same breakdown as the collaborative-filtering notebook. "fm ids only" vs "fm" isolates what metadata + context add.''')
 
 code('''slice_preds = {'fm': fm_test_pred['fm'], 'fm ids only': fm_test_pred['fm ids only'],
@@ -399,7 +399,7 @@ display(view.round(4))''')
 md('''## Interpreting the weights
 
 Linear weights $w_j$ of the selected FM (stars relative to the other levels, after user and wine IDs) and of the
-repo's ridge model on IDs + metadata + time. Because the wine ID is in the model, a metadata weight only captures
+ridge reference on IDs + metadata + time. Because the wine ID is in the model, a metadata weight only captures
 what is shared by wines *beyond* their own IDs, so these are shrunk towards zero for well-rated wines. Weights
 for categories with fewer than 5 training wines are dropped as too noisy.''')
 
@@ -466,7 +466,7 @@ print('Mean factor norm |v_j| by field:'); display(norms.round(4).to_frame())'''
 
 md('''## Top-K ranking: FM vs matrix factorization
 
-Ranking protocol (fixed before looking at results, as the repo's protocol asks):
+Ranking protocol (fixed before looking at results, as the evaluation protocol defines):
 - **Eligible users:** seen in training, with at least one *relevant* test wine (rating ≥ 4) that is not already
   in their training history.
 - **Candidates:** every catalogue wine except the user's training wines; the same users and candidates for every

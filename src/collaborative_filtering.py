@@ -172,7 +172,7 @@ class ItemCF:
 
 class ALSMF:
     """Latent-factor model r = mu + b_u + b_i + p_u . q_i fitted by alternating
-    least squares (our own implementation).
+    least squares with regularized block updates.
 
     Objective: sum (r - mu - b_u - b_i - p_u.q_i)^2
                + reg * (sum_u |p_u|^2 + sum_i |q_i|^2)

@@ -4,7 +4,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from src.cf import ALSMF, BiasBaseline, ItemCF, SurpriseMF, item_similarity
+from src.collaborative_filtering import ALSMF, BiasBaseline, ItemCF, SurpriseMF, item_similarity
 
 
 def synthetic(n_users=40, n_items=15, seed=0):

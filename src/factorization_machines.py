@@ -1,7 +1,6 @@
 """Factorization machine (FM) and content/hybrid helpers for X-Wines.
 
-fastFM does not build on Python 3.11 / NumPy 2 (its wheel build fails), so this
-module implements the standard second-order FM directly:
+The second-order model uses the sparse prediction equation:
 
     y_hat(x) = w0 + sum_j w_j x_j + sum_{j<l} <v_j, v_l> x_j x_l
              = w0 + x.w + 0.5 * sum_f [ (x V)_f^2 - (x^2 V^2)_f ]

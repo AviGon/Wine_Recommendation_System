@@ -1,6 +1,6 @@
 # Findings: collaborative filtering
 
-Notebook: [`notebooks/collaborative_filtering.ipynb`](../notebooks/collaborative_filtering.ipynb). Code: [`src/cf.py`](../src/cf.py).
+Notebook: [`notebooks/collaborative_filtering.ipynb`](../notebooks/collaborative_filtering.ipynb). Code: [`src/collaborative_filtering.py`](../src/collaborative_filtering.py).
 Slim edition, chronological split (train 120,000 / validation 15,000 / test 15,000), seed 258. Every configuration was selected on validation; test was scored once per selected model.
 
 ## Models
@@ -52,4 +52,4 @@ Random-split sensitivity check (same settings, not re-tuned): bias 0.4706, item 
   - **User bias b_u** has a standard deviation of 0.20 stars (90% of users within −0.34 to +0.28).
 - **Do the latent factors group wines?** No. A wine's 10 nearest neighbours in factor space share its type 38.0% of the time, against 37.5% for random neighbours, and its country 13.9% vs 11.7%. The PCA plot shows no type clusters.
 - **Why CF has nothing to learn here:** personal taste is not stable in this data. A user's personal Red-minus-White preference, after removing biases, measured on one random half of their ratings, has a correlation of only r = 0.03 with the same measure on the other half (1,536 users, 20 random splits). Users differ in *how generously* they rate, and wines differ in *how good* they are, but on Slim there is almost no repeatable "this user likes this kind of wine" signal for latent factors to capture.
-- **Implication:** remaining error comes from rating noise and time drift, not missing personalization. The gains come from time/context features and wine attributes for unseen wines (the repo's ridge model and the factorization machine, see [`fm_findings.md`](fm_findings.md)), not from more complex collaborative filtering.
+- **Implication:** remaining error comes from rating noise and time drift, not missing personalization. The gains come from time/context features and wine attributes for unseen wines (the ridge reference and the factorization machine, see [`fm_findings.md`](fm_findings.md)), not from more complex collaborative filtering.

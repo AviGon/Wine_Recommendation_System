@@ -6,8 +6,8 @@ import pandas as pd
 from scipy import sparse
 from scipy.optimize import check_grad
 
-from src import fm as fm_module
-from src.fm import (FactorizationMachine, FMEncoder, FMRecommender, fm_score_matrix, topk_metrics)
+from src import factorization_machines as fm_module
+from src.factorization_machines import (FactorizationMachine, FMEncoder, FMRecommender, fm_score_matrix, topk_metrics)
 
 
 def synthetic(n_users=30, n_items=12, seed=0):

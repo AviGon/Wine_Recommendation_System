@@ -31,13 +31,13 @@ Models compared:
 Protocol (see `docs/evaluation_protocol.md`): the verified **chronological**
 split of the Slim edition, fit on train, tune on validation, score test once for the validation-selected
 configuration of each model. RMSE is primary, MAE secondary, predictions clipped to [1, 5].
-All model code is in `src/cf.py`; findings are summarized in `reports/cf_findings.md`.''')
+All model code is in `src/collaborative_filtering.py`; findings are summarized in `reports/cf_findings.md`.''')
 
 code('''from pathlib import Path
 import sys, os, time
 ROOT = Path.cwd()
-if not (ROOT/'src/cf.py').exists(): ROOT = ROOT.parent
-assert (ROOT/'src/cf.py').exists(), 'Run from repo root or notebooks/'
+if not (ROOT/'src/collaborative_filtering.py').exists(): ROOT = ROOT.parent
+assert (ROOT/'src/collaborative_filtering.py').exists(), 'Run from repo root or notebooks/'
 sys.path.insert(0, str(ROOT))
 os.environ.setdefault('MPLCONFIGDIR', str(ROOT/'.cache/matplotlib'))
 import numpy as np
@@ -48,7 +48,7 @@ from scipy.stats import pearsonr
 from src.pipeline import load_prepared_splits, score_predictions
 from src.experiments import (SEED, metrics, baseline_predictions, cluster_bootstrap,
                              error_slices, join_metadata, FeatureProbe)
-from src.cf import (BiasBaseline, ItemCF, ALSMF, SurpriseMF, SIMILARITIES, evaluate,
+from src.collaborative_filtering import (BiasBaseline, ItemCF, ALSMF, SurpriseMF, SIMILARITIES, evaluate,
                     mf_epoch_curve, neighbour_type_agreement, prediction_frame)
 
 REPORTS = ROOT/'reports'; FIGURES = REPORTS/'figures'; OUTPUTS = ROOT/'outputs'
@@ -65,7 +65,7 @@ print({k: len(v) for k, v in parts.items()}, '| seed', SEED)''')
 
 md('''## Baselines
 
-The repo's references are the global, user and item means (shrinkage 10) and ridge regression on one-hot
+The reference models are the global, user and item means (shrinkage 10) and ridge regression on one-hot
 user/wine IDs (a bias model). Our `BiasBaseline` fits the same additive model, $\\hat r = \\mu + b_u + b_i$,
 but with **separate** regularization for users and wines, solved by alternating exact updates
 (each update minimizes the regularized squared error for one block with the other fixed).''')
@@ -282,7 +282,7 @@ print('Shared scorer agrees:', {k: round(v, 4) if isinstance(v, float) else v fo
 
 md('''**Sensitivity: random split.** The chronological test is later in time and its mean rating is higher
 (3.99 vs 3.78 in train). To check that our conclusion is not only a time-drift effect, we refit the same
-selected configurations on the repo's random user–wine split (hyperparameters are *not* re-tuned).''')
+selected configurations on the random user–wine split (hyperparameters are *not* re-tuned).''')
 
 code('''_, random_parts = load_prepared_splits(ROOT, 'random')
 r_train, r_test = random_parts['train'], random_parts['test']
@@ -359,7 +359,7 @@ md('''## Noise, sparsity and missing data
 - **New users.** Chronological test rows whose user never appears in training cannot be personalized; every CF
   model falls back to $\\mu + b_i$.
 - **Time drift.** The test period is later and rated higher, so all ID-based models under-predict on average.
-  This is a bias the CF models cannot fix; the time features in the repo's ridge model and the factorization-machine notebook address it.
+  This is a bias the CF models cannot fix; the time features in the ridge reference and the factorization-machine notebook address it.
 - **Selection bias.** Users choose what to rate (and likely choose wines they expect to like), so the observed
   ratings are not a random sample of tastes.''')
 
@@ -385,7 +385,7 @@ md('''# Results
 
 ## Who is easier to predict?
 
-The repo's `error_slices` (the same bins as the main analysis notebook): test errors by how many training ratings the
+The shared `error_slices` (the same bins as the main analysis notebook): test errors by how many training ratings the
 user and the wine have.''')
 
 code('''slices = pd.concat([error_slices(train, test, test_pred[n], n) for n in ['bias', 'item_cf', 'als_mf']],

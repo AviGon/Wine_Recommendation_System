@@ -1,13 +1,13 @@
 # Findings: factorization machines, content and hybrid models
 
-Notebook: [`notebooks/factorization_machines.ipynb`](../notebooks/factorization_machines.ipynb). Code: [`src/fm.py`](../src/fm.py). Tests: [`tests/test_fm.py`](../tests/test_fm.py).
+Notebook: [`notebooks/factorization_machines.ipynb`](../notebooks/factorization_machines.ipynb). Code: [`src/factorization_machines.py`](../src/factorization_machines.py). Tests: [`tests/test_factorization_machines.py`](../tests/test_factorization_machines.py).
 Slim edition, chronological split (train 120,000 / validation 15,000 / test 15,000), seed 258. Every configuration was selected on validation, and test was scored once per selected model. The shared scorer (`scripts/evaluate_predictions.py --partition test`) reproduces the FM's test RMSE exactly.
 
 ## Models
 
 ### Implementation (fastFM replaced)
 - **fastFM does not build** on Python 3.11 / NumPy 2: both the PyPI release and the GitHub source fail at the wheel-build step. So we use two other FMs:
-  1. **Our own FM** (`FactorizationMachine`), the main model. It is the standard second-order FM, with the pairwise term computed in O(k·nnz). It minimizes ½·SSE + ½λ_w‖w‖² + ½λ_V‖V‖² by **full-batch L-BFGS** with an analytic gradient, checked against finite differences in the tests. With k = 0 it reproduces the closed-form ridge solution (also tested), and on the repo's ridge features it matches the repo's `FeatureProbe` validation RMSE (0.4440 vs 0.44397 at λ = 10).
+  1. **Our own FM** (`FactorizationMachine`), the main model. It is the standard second-order FM, with the pairwise term computed in O(k·nnz). It minimizes ½·SSE + ½λ_w‖w‖² + ½λ_V‖V‖² by **full-batch L-BFGS** with an analytic gradient, checked against finite differences in the tests. With k = 0 it reproduces the closed-form ridge solution (also tested), and on the repo's ridge features it matches the ridge `FeatureProbe` validation RMSE (0.4440 vs 0.44397 at λ = 10).
   2. **A library FM, myFM** (`BayesianFM`, Gibbs-sampling Bayesian FM) with one hyperprior group per field. myFM 0.4.0 needs `setuptools<81` (it imports `pkg_resources`); both are pinned in `requirements.txt`.
 - **Features:** one-hot user, wine, type, elaborate, country, region and winery; fractional multi-hot grapes (1/k for a k-grape blend); ABV z-score + missing flag. Context features: month sin/cos, rating year, and rated-vintage age + missing flag. All of these are fitted on training rows only. An unseen user, wine or category gets no column, so it contributes zero; that is the FM's fallback.
 
@@ -42,7 +42,7 @@ Grid on the full feature set: k ∈ {0, 2, 4, 8, 16}, λ_w ∈ {2…10}, λ_V �
 - **Static metadata adds 0.0007 in total; context adds 0.009.**
 - The FM's interactions help only once context is present (−0.0003), and only through context × metadata terms (below).
 
-### Time vs vintage age (separated for the first time; the repo left this unresolved)
+### Calendar time and vintage age
 
 | | Without static metadata | With static metadata |
 |---|---|---|
@@ -110,7 +110,7 @@ Test (14,536 rows, 101 wines, scored once):
   - The extra features.
   - The Bayesian FM.
   - The FM on the cold-item test.
-  - On IDs alone, the FM (0.4469) is slightly worse than the bias model in `src/cf.py` (0.4457), which has separate user and wine regularization.
+  - On IDs alone, the FM (0.4469) is slightly worse than the bias model in `src/collaborative_filtering.py` (0.4457), which has separate user and wine regularization.
 
 ### Does metadata help warm wines, or only new ones?
 - **Mostly new wines.** On warm rows the gain over IDs comes almost entirely from context. For example, adding static metadata to IDs changes validation RMSE by only −0.0007, while time alone gives −0.008.
