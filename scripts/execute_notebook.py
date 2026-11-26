@@ -1,6 +1,6 @@
 """Execute all cells using this Python interpreter and fail on the first error.
 
-Usage: python scripts/execute_notebook.py [notebook path, default notebooks/xwines_analysis.ipynb]
+Usage: python scripts/execute_notebook.py [notebook path, default notebooks/wine_recommendation.ipynb]
 """
 import os
 import sys
@@ -16,7 +16,7 @@ os.environ.setdefault('MPLCONFIGDIR',str(ROOT/'.cache/matplotlib'))
 os.environ.setdefault('IPYTHONDIR',str(ROOT/'.cache/ipython'))
 os.environ.setdefault('JUPYTER_RUNTIME_DIR',str(ROOT/'.cache/jupyter-runtime'))
 os.environ.setdefault('SURPRISE_DATA_FOLDER',str(ROOT/'.cache/surprise'))
-path = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else ROOT/'notebooks/xwines_analysis.ipynb'
+path = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else ROOT/'notebooks/wine_recommendation.ipynb'
 nb = nbformat.read(path,as_version=4)
 km = KernelManager(kernel_name='python3')
 km.kernel_spec.argv = [sys.executable,'-m','ipykernel_launcher','-f','{connection_file}']

@@ -1,6 +1,6 @@
 # Findings: collaborative filtering
 
-Notebook: [`notebooks/collaborative_filtering.ipynb`](../notebooks/collaborative_filtering.ipynb). Code: [`src/collaborative_filtering.py`](../src/collaborative_filtering.py).
+Notebook generator: [`build_collaborative_filtering.py`](../scripts/build_collaborative_filtering.py). Code: [`collaborative_filtering.py`](../src/collaborative_filtering.py).
 Slim edition, chronological split (train 120,000 / validation 15,000 / test 15,000), seed 258. Every configuration was selected on validation; test was scored once per selected model.
 
 ## Models

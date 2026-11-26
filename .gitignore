@@ -8,3 +8,6 @@ data/processed/
 reports/figures/
 reports/*_test_predictions.csv
 outputs/
+/notebooks/xwines_analysis.ipynb
+/notebooks/collaborative_filtering.ipynb
+/notebooks/factorization_machines.ipynb

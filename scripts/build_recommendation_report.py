@@ -27,6 +27,11 @@ REPORT_NAMES = [
     'fm_cold_item_test.csv', 'fm_error_slices.csv', 'fm_feature_weights.csv',
     'fm_topk.csv', 'fm_diversity.csv', 'split_manifests.json',
 ]
+CHART_REPORT_NAMES = (
+    'dataset_summary.csv', 'activity_quantiles.csv', 'train_year_summary.csv',
+    'train_type_summary.csv', 'train_country_summary.csv',
+)
+CHART_NAMES = ('rating_activity', 'categories_origins')
 
 
 def pinned(path, revision):
@@ -43,6 +48,39 @@ def snippet(path, symbol, revision):
     first = min([node.lineno] + [d.lineno for d in node.decorator_list])
     return dict(path=path, symbol=symbol, line=first,
                 code=textwrap.dedent('\n'.join(source.splitlines()[first-1:node.end_lineno])))
+
+
+def embedded_data(notebook):
+    """Read the literal report archive without executing notebook code."""
+    for cell in notebook.cells:
+        if cell.cell_type != 'code':
+            continue
+        for node in ast.parse(cell.source).body:
+            if (isinstance(node, ast.Assign) and
+                    any(isinstance(target, ast.Name) and target.id == '_ARCHIVE' for target in node.targets)):
+                archive = ast.literal_eval(node.value)
+                return json.loads(zlib.decompress(base64.b64decode(archive, validate=True)))
+    raise ValueError('Published notebook has no embedded report data')
+
+
+def chart_images(revision, available_paths, reports):
+    analysis_path = 'notebooks/xwines_analysis.ipynb'
+    if analysis_path in available_paths:
+        analysis = nbf.reads(pinned(analysis_path, revision).decode(), as_version=4)
+        images = {}
+        for name in CHART_NAMES:
+            cell = next(c for c in analysis.cells if c.cell_type == 'code' and f'{name}.png' in c.source)
+            images[name] = next(o.data['image/png'] for o in cell.outputs if 'image/png' in o.get('data', {}))
+        return images
+
+    report_path = 'notebooks/wine_recommendation.ipynb'
+    if report_path not in available_paths:
+        raise ValueError('Data revision contains no saved analysis figures')
+    data = embedded_data(nbf.reads(pinned(report_path, revision).decode(), as_version=4))
+    for name in CHART_REPORT_NAMES:
+        if data['reports'].get(name) != reports[name]:
+            raise ValueError(f'Saved charts do not match the data revision: {name}')
+    return {name: data['images'][name] for name in CHART_NAMES}
 
 
 def build(revision=DEFAULT_DATA_REVISION, output=None):
@@ -66,14 +104,20 @@ def build(revision=DEFAULT_DATA_REVISION, output=None):
         ('fm_fit', 'src/factorization_machines.py', 'FactorizationMachine.fit'),
         ('encoder', 'src/factorization_machines.py', 'FMEncoder.fit'),
     ]}
-    images = {}
-    analysis = nbf.reads(pinned('notebooks/xwines_analysis.ipynb', source_commit).decode(), as_version=4)
-    for name in ['rating_activity', 'categories_origins']:
-        cell = next(c for c in analysis.cells if c.cell_type == 'code' and f"{name}.png" in c.source)
-        images[name] = next(o.data['image/png'] for o in cell.outputs if 'image/png' in o.get('data', {}))
+    images = chart_images(source_commit, available_paths, reports)
+    training_sources = []
+    for label, current, archived in [
+        ('Rating analysis', 'scripts/build_rating_analysis.py', 'scripts/build_notebook.py'),
+        ('Collaborative filtering', 'scripts/build_collaborative_filtering.py', 'scripts/build_cf_notebook.py'),
+        ('Factorization machines', 'scripts/build_factorization_machines.py', 'scripts/build_fm_notebook.py'),
+    ]:
+        path = current if current in available_paths else archived
+        if path not in available_paths:
+            raise ValueError(f'Missing experiment generator: {current}')
+        training_sources.append(dict(label=label, path=path))
     payload = dict(reports=reports, sources=sources, images=images,
                    hashes={name: hashlib.sha256(value.encode()).hexdigest() for name, value in reports.items()},
-                   source_commit=source_commit)
+                   source_commit=source_commit, training_sources=training_sources)
     packed = base64.b64encode(zlib.compress(json.dumps(payload).encode(), 9)).decode()
     cells = []
     def md(value): cells.append(nbf.v4.new_markdown_cell(textwrap.dedent(value).strip()))
@@ -394,9 +438,9 @@ def build(revision=DEFAULT_DATA_REVISION, output=None):
     code('''
     print('Repository:', 'https://github.com/AviGon/Wine_Recommendation_System')
     print('Experiment revision:', SNAPSHOT['source_commit'])
-    for name in ['xwines_analysis.ipynb', 'collaborative_filtering.ipynb', 'factorization_machines.ipynb']:
-        display(Markdown('[Detailed notebook: '+name+'](https://github.com/AviGon/Wine_Recommendation_System/blob/'
-                         + SNAPSHOT['source_commit'] + '/notebooks/' + name + ')'))
+    for source in SNAPSHOT['training_sources']:
+        display(Markdown('['+source['label']+' source](https://github.com/AviGon/Wine_Recommendation_System/blob/'
+                         + SNAPSHOT['source_commit'] + '/' + source['path'] + ')'))
     ''')
     notebook = nbf.v4.new_notebook(cells=cells, metadata={
         'kernelspec': {'display_name':'Python 3','language':'python','name':'python3'},

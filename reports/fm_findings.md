@@ -1,6 +1,6 @@
 # Findings: factorization machines, content and hybrid models
 
-Notebook: [`notebooks/factorization_machines.ipynb`](../notebooks/factorization_machines.ipynb). Code: [`src/factorization_machines.py`](../src/factorization_machines.py). Tests: [`tests/test_factorization_machines.py`](../tests/test_factorization_machines.py).
+Notebook generator: [`build_factorization_machines.py`](../scripts/build_factorization_machines.py). Code: [`factorization_machines.py`](../src/factorization_machines.py). Tests: [`test_factorization_machines.py`](../tests/test_factorization_machines.py).
 Slim edition, chronological split (train 120,000 / validation 15,000 / test 15,000), seed 258. Every configuration was selected on validation, and test was scored once per selected model. The shared scorer (`scripts/evaluate_predictions.py --partition test`) reproduces the FM's test RMSE exactly.
 
 ## Models

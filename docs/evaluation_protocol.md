@@ -4,7 +4,7 @@
 
 Use **Slim**, not upstream Test, for reported core results. `data/sources.json` pins download URLs, byte counts and SHA-256 checksums. Download with `python scripts/download_data.py`. Four inputs cover the Slim experiment and the Test-edition schema/example comparison. Keep raw data local; regenerate instead of committing large CSVs.
 
-Run the notebook to create `data/processed/Slim/{chronological,random,cold_item}/{train,validation,test}.csv`. Every row retains **RatingID, UserID, WineID, Vintage, Rating, Date**. `reports/split_manifests.json` records checksums and row counts of the exported CSVs. No dense user×wine matrix is materialized. Global random seed: **258**.
+Run `python scripts/prepare_data.py` to create `data/processed/Slim/{chronological,random,cold_item}/{train,validation,test}.csv`. Every row retains **RatingID, UserID, WineID, Vintage, Rating, Date**. `reports/split_manifests.json` records checksums and row counts of the exported CSVs. No dense user×wine matrix is materialized. Global random seed: **258**.
 
 For reuse without rerunning experiments, run `python scripts/download_data.py` and `python scripts/prepare_data.py`. Preparation uses the tracked manifest as a read-only reference, verifies all generated CSV hashes before publishing any of them, and writes rows in RatingID order. Changing input, seed, membership or serialization fails verification rather than silently changing the benchmark. Missing local partitions must be prepared explicitly.
 
