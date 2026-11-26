@@ -2,9 +2,26 @@
 
 Exploratory analysis and rating prediction with X-Wines. The experiments compare user/wine identities, wine attributes, and temporal features using chronological, random, and unseen-wine splits.
 
-Start with the [analysis notebook](notebooks/xwines_analysis.ipynb), [findings](reports/findings.md), and [evaluation protocol](docs/evaluation_protocol.md).
+Start with the [cumulative notebook](notebooks/wine_recommendation.ipynb) or its [readable HTML report](output/workbook.html). It consolidates the exploration, model comparisons, evaluation and related research. The detailed notebooks and original reports remain available below.
 
-## Reproduce
+## Cumulative report and recording outline
+
+The cumulative notebook contains embedded, checksum-verified saved reports and code excerpts from the merged experiment revision. It runs in Colab without downloading the dataset or installing the compiled model libraries. Running it rebuilds the figures and tables; full model reproduction is optional and disabled by default.
+
+[Open in Colab](https://colab.research.google.com/github/AviGon/Wine_Recommendation_System/blob/ksheer/notebooks/wine_recommendation.ipynb)
+
+To build and export the cumulative report locally, without refitting models:
+
+```sh
+python -m pip install -r requirements-report.txt
+python scripts/build_cumulative_notebook.py
+python scripts/execute_notebook.py notebooks/wine_recommendation.ipynb
+python scripts/export_workbook.py
+```
+
+The export is `output/workbook.html`, with figures and outputs included and the embedded data-loader input hidden. The [recording outline](docs/presentation_flow.md) proposes a twenty-minute flow for four speakers, a shared deck of about ten slides, and focused notebook/code walkthroughs.
+
+## Reproduce the detailed experiments
 
 Python 3.11 was used. From the repository root:
 
@@ -70,6 +87,6 @@ The downloader retrieves the official Slim edition (150,000 ratings) and Test ex
 
 Experiments include rating and activity distributions, origin/type/grape comparisons, within-user type differences, taste-concentration permutations, sparse ridge feature comparisons, RMSE/MAE, bootstrap confidence intervals, and error slices. Raw data, generated split CSVs, prediction rows, and standalone figure PNGs stay local. The notebook embeds results and figures; reports/ contains compact summaries and split hashes.
 
-Prices and consumer locations are unavailable. Catalogue metadata is retrospective, so chronological splitting does not establish historical attribute availability. [Matched validation contrasts](reports/chronological_feature_contrasts.csv) separate static-attribute additions from rating-context additions at the same regularization. The context features combine calendar time and rated-vintage age; their individual contributions remain unresolved.
+Prices and consumer locations are unavailable. Catalogue metadata is retrospective, so chronological splitting does not establish historical attribute availability. [Matched validation contrasts](reports/chronological_feature_contrasts.csv) separate static-attribute additions from rating-context additions at the same regularization. The original ridge context features combine calendar time and rated-vintage age; the FM extension separates those components in `reports/fm_time_vs_age.csv` and the cumulative notebook.
 
 Dataset citation: de Azambuja, R. X., Morais, A. J., & Filipe, V. (2023). [X-Wines: A Wine Dataset for Recommender Systems and Machine Learning](https://doi.org/10.3390/bdcc7010020). *Big Data and Cognitive Computing*, 7(1), 20. [Official repository](https://github.com/rogerioxavier/X-Wines).

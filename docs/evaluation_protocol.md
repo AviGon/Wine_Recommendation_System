@@ -37,7 +37,7 @@ The probe accepts only the declared feature fields. Labels and undeclared raw co
 
 At the original ID-reference alpha of 10, adding static attributes changes validation RMSE from about 0.4544 to 0.4539, while adding context changes it to 0.4456. Static attributes plus context reach 0.4440. This supports keeping the two feature groups distinct; it does not establish causal effects.
 
-The historical name `ids_time_only` includes calendar features **and rated-vintage age**. It is not a calendar-only ablation. The `selected_metadata` prediction column can likewise represent a model with context. These names are retained for compatibility with saved results. Their combined test improvement is not an isolated static-metadata improvement, and calendar versus vintage-age contributions have not been separated.
+The historical name `ids_time_only` includes calendar features **and rated-vintage age**. It is not a calendar-only ablation. The `selected_metadata` prediction column can likewise represent a model with context. These names are retained for compatibility with saved results. Their combined test improvement is not an isolated static-metadata improvement, and calendar versus vintage-age contributions are not separated in those original ridge probes. The later FM study adds separate Time/Age validation ablations in `reports/fm_time_vs_age.csv`; these are integrated in `notebooks/wine_recommendation.ipynb`.
 
 ## Evaluation and predictions
 
