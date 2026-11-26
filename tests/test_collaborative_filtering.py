@@ -1,5 +1,7 @@
 """Checks for the collaborative-filtering models; synthetic data only."""
 import unittest
+import tempfile
+from unittest.mock import patch
 
 import numpy as np
 import pandas as pd
@@ -20,6 +22,8 @@ def synthetic(n_users=40, n_items=15, seed=0):
 
 class CFTests(unittest.TestCase):
     def setUp(self):
+        cache = self.enterContext(tempfile.TemporaryDirectory())
+        self.enterContext(patch.dict('os.environ', {'SURPRISE_DATA_FOLDER': cache}))
         self.train = synthetic()
 
     def test_pearson_matches_numpy_on_co_rating_users(self):
