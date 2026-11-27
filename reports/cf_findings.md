@@ -32,7 +32,7 @@ Random-split sensitivity check (same settings, not re-tuned): bias 0.4706, item 
   - On Slim every model fits in under about 5 seconds.
   - For Full (21M ratings, 1.06M users, 100K wines), the bias model and Surprise SGD scale with the number of ratings (minutes), and our ALS scales with users + wines (its Python loop would need to be vectorized).
   - Item CF is the hard one: a dense wine × wine similarity matrix would need 81 GB, so it would need a sparse top-neighbour index.
-  - A dense user × wine matrix (850 TB) is impossible, which is why everything uses sparse data structures.
+  - A dense user × wine matrix (850 GB) is impossible, which is why everything uses sparse data structures.
 - **Noise and missing data.**
   - Ratings are half-stars, 73.5% of them between 3.5 and 4.5, and the bias model's residual RMSE is 0.45 even on training data.
   - The median user has 10 training ratings.
