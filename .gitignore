@@ -5,7 +5,10 @@ __pycache__/
 data/raw/
 data/processed/
 .cache/
-reports/figures/
+reports/figures/*
+!reports/figures/rating_activity.png
+!reports/figures/categories_origins.png
+!reports/figures/cf_embedding_pca.png
 reports/*_test_predictions.csv
 outputs/
 /notebooks/xwines_analysis.ipynb

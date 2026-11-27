@@ -62,15 +62,14 @@ Detailed experiment notebooks are generated locally and excluded from version co
 
 ## Report rendering
 
-The report embeds versioned experiment data and verifies its checksums. Rendering regenerates figures and tables without training models or downloading data.
+The published notebook reads the saved results in `reports/` (and three figures in `reports/figures/`) and draws its tables and charts from them; it does not train models or download data, and runs in a few seconds. Edit it directly, then re-run and export:
 
 ```sh
-python scripts/build_recommendation_report.py
 python scripts/execute_notebook.py
 python scripts/export_html.py
 ```
 
-The notebook runner defaults to the published report. The builder accepts `--revision` and `--output` and reads versioned inputs from Git history. It supports both archived experiment notebooks and chart data embedded in a published report. The exporter accepts a notebook path and `--output`; its default destination is `output/workbook.html`. Model retraining uses the detailed notebooks above and remains separate from report rendering.
+The notebook runner defaults to the published report. The exporter accepts a notebook path and `--output`; its default destination is `output/workbook.html`. Model retraining uses the detailed notebooks above and remains separate from report rendering. `scripts/build_recommendation_report.py` generates an earlier self-contained variant that embeds the results inside the notebook; running it overwrites `notebooks/wine_recommendation.ipynb`.
 
 ## Prediction scoring
 
