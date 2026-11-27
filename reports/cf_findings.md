@@ -24,7 +24,7 @@ Random-split sensitivity check (same settings, not re-tuned): bias 0.4706, item 
 - **Optimization.** Bias model: exact alternating updates. Item CF: closed form. Our MF: alternating least squares, where each half-step is an exact ridge solve, so there is no learning rate and training error falls monotonically. Surprise: SGD with a fixed learning rate of 0.005.
 - **Overfitting.** This is the central issue:
   - With weak regularization, MF memorizes training ratings. For example, k = 64 and λ = 5 drives training RMSE down to 0.29 while validation gets worse than the bias model.
-  - With λ ≥ 14 the factors shrink to zero and MF becomes exactly the bias model.
+  - With λ ≥ 14 the factors shrink towards zero, and by λ = 20 MF is exactly the bias model.
   - The useful window in between gains at most 0.0003 RMSE on validation and nothing on test.
   - Surprise SGD shows the same thing over epochs: the best is 20 epochs; more epochs overfit.
   - Item CF also overfits without damping: the textbook weighted average (d = 0) gives 0.494 on validation vs 0.450 for the bias model. A damping term of 1 fixes it.
